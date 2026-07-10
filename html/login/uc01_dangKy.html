@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký tài khoản mới</title>
+    <link rel="stylesheet" href="../../css/uc01_dangKy.css">
+
+</head>
+<body>
+
+<div class="main-container">
+
+    <div class="image-sidebar">
+        <h1>Khám phá bầu trời</h1>
+        <p>Đăng ký thành viên ngay để nhận ưu đãi vé máy bay giá tốt, quản lý lịch trình bay thông minh và tích lũy dặm thưởng cho những hành trình tiếp theo.</p>
+    </div>
+
+    <div class="form-container">
+
+        <div id="step-register">
+            <div class="form-header">
+                <h2>Đăng ký tài khoản</h2>
+                <p>Vui lòng điền đầy đủ các thông tin dưới đây để khởi tạo tài khoản.</p>
+            </div>
+
+            <div class="alert alert-error" id="error-register">
+                Email hoặc Số điện thoại này đã tồn tại trên hệ thống!
+            </div>
+
+            <form id="form-register" onsubmit="handleRegister(event)">
+                <div class="input-group">
+                    <label for="fullname">Họ và tên</label>
+                    <input type="text" id="fullname" placeholder="Ví dụ: Nguyễn Văn A" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="contact">Email hoặc Số điện thoại</label>
+                    <input type="text" id="contact" placeholder="Nhập email hoặc số điện thoại của bạn" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Mật khẩu</label>
+                    <input type="password" id="password" placeholder="Tối thiểu 8 ký tự, bao gồm chữ hoa và số" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="confirm-password">Xác nhận mật khẩu</label>
+                    <input type="password" id="confirm-password" placeholder="Vui lòng xác nhận lại mật khẩu đã nhập" required>
+                </div>
+
+                <button type="submit" class="btn-submit">Tiếp tục</button>
+            </form>
+
+            <div class="footer-text">
+                Bạn đã có tài khoản? <a href="#">Đăng nhập ngay</a>
+            </div>
+        </div>
+
+        <div id="step-otp" class="otp-section">
+            <div class="form-header">
+                <h2>Nhập mã OTP</h2>
+                <p>Mã xác thực gồm 6 chữ số đã được gửi. Vui lòng kiểm tra hộp thư điện tử hoặc tin nhắn SMS của bạn.</p>
+            </div>
+
+            <div class="alert alert-error" id="error-otp">
+                Mã OTP không chính xác hoặc đã hết hiệu lực.
+            </div>
+            <div class="alert alert-success" id="success-otp">
+                Mã OTP mới đã được gửi lại thành công!
+            </div>
+
+            <form id="form-otp" onsubmit="handleVerifyOTP(event)">
+                <div class="otp-inputs">
+                    <input type="text" maxlength="1" oninput="moveNext(this, 'otp2')" id="otp1" required>
+                    <input type="text" maxlength="1" oninput="moveNext(this, 'otp3')" id="otp2" required>
+                    <input type="text" maxlength="1" oninput="moveNext(this, 'otp4')" id="otp3" required>
+                    <input type="text" maxlength="1" oninput="moveNext(this, 'otp5')" id="otp4" required>
+                    <input type="text" maxlength="1" oninput="moveNext(this, 'otp6')" id="otp5" required>
+                    <input type="text" maxlength="1" id="otp6" required>
+                </div>
+
+                <div class="countdown-text">
+                    Mã hiệu lực trong vòng: <span>05:00</span>
+                </div>
+
+                <button type="submit" class="btn-submit">Xác nhận hoàn tất</button>
+
+                <div class="btn-group-sub">
+                    <button type="button" class="btn-sub" onclick="handleResendOTP()">Gửi lại mã</button>
+                    <button type="button" class="btn-sub btn-cancel" onclick="handleCancel()">Hủy bỏ</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<script src="../../js/uc01_đangKy.js"></script>
+</body>
+</html>
