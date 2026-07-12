@@ -18,5 +18,6 @@ function togglePassword() {
 // Xử lý đăng nhập – chuyển đến trang chủ
 function handleLogin(event) {
     event.preventDefault();
+    localStorage.setItem('isLoggedIn', 'true');
     window.location.href = '../user/trangChu.html';
 }
