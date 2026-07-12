@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý vé đã đặt - Flight Booking</title>
+    <link rel="stylesheet" href="../../css/user/header.css">
+    <link rel="stylesheet" href="../../css/user/footer.css">
+    <link rel="stylesheet" href="../../css/user/uc07_quanLyVeDaDat.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+    <div id="header"></div>
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1>Quản lý vé đã đặt</h1>
+                <p>Danh sách các hành trình bạn đã đặt chỗ trên hệ thống.</p>
+            </div>
+            
+            <div id="ticket-list" class="ticket-grid">
+            </div>
+        </div>
+    </main>
+    <div id="ticket-modal" class="modal hidden">
+        <div class="modal-backdrop" onclick="closeModal()"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Chi tiết vé máy bay</h2>
+                <button class="btn-close" onclick="closeModal()"><i class="fa-solid fa-times"></i></button>
+            </div>
+        </div>
+    </div>
+<div id="footer"></div>
+<script src="../../js/user/header.js"></script>
+<script src="../../js/user/uc07_quanLyVeDaDat.js"></script>
+</body>
+</html>
