@@ -1,0 +1,282 @@
+body {
+    background-color: #f1f5f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #0f172a;
+}
+
+.container {
+    max-width: 950px;
+    margin: 40px auto;
+    padding: 0 20px;
+    min-height: 70vh;
+}
+
+.page-title {
+    font-size: 28px;
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+/* Flight Summary Header */
+.flight-summary-card {
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    color: white;
+    padding: 25px 30px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+}
+.flight-route {
+    font-size: 24px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.flight-time {
+    color: #cbd5e1;
+    font-size: 15px;
+}
+
+/* Alerts */
+.alert {
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.alert-error { background: #fef2f2; color: #ef4444; border: 1px solid #fecaca; }
+.alert-success { background: #ecfdf5; color: #10b981; border: 1px solid #bbf7d0; }
+.alert-warning { background: #fffbeb; color: #f59e0b; border: 1px solid #fde68a; }
+.hidden { display: none !important; }
+
+/* Sections */
+.step-section {
+    background: white;
+    border-radius: 12px;
+    padding: 35px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    margin-bottom: 25px;
+    animation: fadeIn 0.4s ease-out;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.step-section h2 {
+    margin-top: 0;
+    border-bottom: 2px solid #f1f5f9;
+    padding-bottom: 15px;
+    font-size: 22px;
+    margin-bottom: 30px;
+}
+
+/* Step 1: Seats */
+.class-selection {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+.class-card {
+    flex: 1;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s;
+    background: #f8fafc;
+}
+.class-card h4 { margin: 0 0 10px 0; font-size: 18px; color: #334155;}
+.class-card p { margin: 0; color: #64748b; font-weight: 600;}
+.class-card.selected {
+    border-color: #2563eb;
+    background: #eff6ff;
+}
+.class-card.selected h4 { color: #1d4ed8; }
+
+.seat-map-container {
+    text-align: center;
+    background: #f8fafc;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+.seat-map-container h3 { margin-top:0; margin-bottom: 25px; color: #334155; }
+.seat-map {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    max-width: 450px;
+    margin: 0 auto 30px auto;
+}
+.seat {
+    height: 50px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    cursor: pointer;
+    border: 2px solid #cbd5e1;
+    font-size: 15px;
+    transition: all 0.2s;
+}
+.seat.available { background: white; color: #334155; }
+.seat.available:hover { border-color: #2563eb; color: #2563eb; transform: translateY(-2px); }
+.seat.occupied { background: #cbd5e1; color: white; border-color: #cbd5e1; cursor: not-allowed; }
+.seat.selected { background: #2563eb; color: white; border-color: #2563eb; }
+
+.seat-legend {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+}
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 500;
+}
+.legend-item .seat { width: 30px; height: 30px; border-width: 1px; cursor: default;}
+.legend-item .seat:hover { transform: none; border-color: inherit;}
+
+/* Step 2: Form */
+.input-row { display: flex; gap: 20px; }
+.input-group { flex: 1; display: flex; flex-direction: column; gap: 8px; margin-bottom: 25px; }
+.input-group label { font-size: 14px; font-weight: 600; color: #334155; }
+.input-group input, .input-group select {
+    padding: 14px 15px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s;
+    font-family: inherit;
+}
+.input-group input:focus, .input-group select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Step 3: Services */
+.services-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.service-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background: #f8fafc;
+}
+.service-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.service-info i {
+    font-size: 32px;
+    color: #38bdf8;
+    width: 40px;
+    text-align: center;
+}
+.service-info h4 { margin: 0 0 8px 0; font-size: 18px; }
+.service-info p { margin: 0; color: #64748b; font-size: 14px; }
+.service-item select {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    font-size: 15px;
+    min-width: 250px;
+    outline: none;
+}
+.service-item select:focus { border-color: #2563eb; }
+
+/* Step 4: Summary */
+.summary-container {
+    display: flex;
+    gap: 30px;
+}
+.summary-details { flex: 1; display: flex; flex-direction: column; gap: 15px;}
+.summary-block {
+    background: #f8fafc;
+    padding: 20px 25px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+.summary-block h4 { margin: 0 0 15px 0; color: #0f172a; border-bottom: 1px dashed #cbd5e1; padding-bottom: 10px;}
+.summary-block p { margin: 8px 0; font-size: 15px; color: #475569; }
+.summary-price {
+    flex: 1;
+    background: white;
+    border: 1px solid #e2e8f0;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+}
+.promo-code-box { margin-bottom: 25px; }
+.promo-code-box label { font-size: 14px; font-weight: 600; display:block; margin-bottom: 10px; color:#334155;}
+.promo-code-box input { flex:1; padding:12px; border:1px solid #cbd5e1; border-radius:8px; outline:none; font-size:15px;}
+.promo-code-box input:focus { border-color: #2563eb; }
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-size: 15px;
+    color: #334155;
+}
+.price-row.total {
+    font-size: 22px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-top: 20px;
+}
+hr { border: 0; border-top: 1px dashed #cbd5e1; margin: 25px 0; }
+
+.text-danger { color: #ef4444; }
+.text-success { color: #10b981; }
+.text-primary { color: #2563eb; }
+.btn-link { background: none; border: none; color: #2563eb; text-decoration: none; cursor: pointer; padding: 0; font-size: 14px; font-weight: 600;}
+.btn-link:hover { text-decoration: underline; }
+
+/* Buttons */
+.action-buttons { display: flex; justify-content: flex-end; gap: 15px; margin-top: 30px; border-top: 1px solid #f1f5f9; padding-top: 20px;}
+.btn {
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+.btn-block { width: 100%; display: flex; padding: 15px;}
+.btn-primary { background: #2563eb; color: white; }
+.btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); box-shadow: 0 4px 6px -1px rgba(37,99,235,0.2);}
+.btn-secondary { background: #e2e8f0; color: #475569; }
+.btn-secondary:hover { background: #cbd5e1; }
+
+@media (max-width: 768px) {
+    .summary-container { flex-direction: column; }
+    .input-row { flex-direction: column; gap: 0; }
+    .flight-summary-card { flex-direction: column; text-align: center; gap: 10px; }
+}
