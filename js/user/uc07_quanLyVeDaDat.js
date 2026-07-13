@@ -77,9 +77,52 @@ function renderTickets() {
         ticketListEl.appendChild(card);
     });
 }
+function showAlert(message, type = 'error') {
+    const alertEl = document.getElementById('alert-message');
+    if (!alertEl) return;
+    const icon = type === 'error' ? '<i class="fa-solid fa-circle-exclamation"></i>' : '<i class="fa-solid fa-triangle-exclamation"></i>';
+    alertEl.innerHTML = `${icon} ${message}`;
+    alertEl.className = `alert alert-${type}`;
+    alertEl.classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function hideAlert() {
+    const alertEl = document.getElementById('alert-message');
+    if (alertEl) alertEl.classList.add('hidden');
+}
+
 function openTicketDetails(ticketId) {
+    hideAlert();
+
+    // Giả lập lỗi truy xuất dữ liệu (Luồng phụ 10.3)
+    if (Math.random() < 0.05) {
+        showAlert("Không thể tải thông tin vé. Vui lòng thử lại sau.", "error");
+        return;
+    }
+
     const ticket = mockTickets.find(t => t.id === ticketId);
-    if (!ticket) return;
+    
+    // Luồng phụ 10.1: Không tìm thấy vé
+    if (!ticket) {
+        showAlert("Không tìm thấy thông tin vé hoặc vé không còn tồn tại.", "error");
+        return;
+    }
+
+    // Giả lập Luồng phụ 10.2: Vé không thuộc quyền sở hữu (Tỉ lệ 30% khi nhấn vào vé BB1122C)
+    if (ticket.id === "BB1122C" && Math.random() < 0.3) {
+        showAlert("Bạn không có quyền xem thông tin của vé này.", "error");
+        return;
+    }
+
+    // Giả lập Luồng phụ 10.4: Trạng thái vé thay đổi (Tỉ lệ 20% khi nhấn vào vé chờ bay)
+    if (ticket.status === 'cho-bay' && Math.random() < 0.2) {
+        ticket.status = 'da-huy';
+        ticket.statusLabel = 'Đã hủy';
+        showAlert("Thông tin trạng thái vé đã được cập nhật.", "warning");
+        renderTickets();
+    }
+
     modalBodyEl.innerHTML = `
         <div class="detail-row">
             <span class="detail-label">Mã đặt chỗ</span>

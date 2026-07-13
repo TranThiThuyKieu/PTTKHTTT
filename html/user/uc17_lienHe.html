@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liên hệ & Hỗ trợ - Flight Booking</title>
+    <link rel="stylesheet" href="../../css/user/header.css">
+    <link rel="stylesheet" href="../../css/user/footer.css">
+    <link rel="stylesheet" href="../../css/user/uc17_lienHe.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+    <div id="header"></div>
+    
+    <main class="main-content">
+        <div class="container contact-container">
+            <div class="contact-header">
+                <h1>Liên hệ & Hỗ trợ</h1>
+                <p>Chúng tôi luôn sẵn sàng lắng nghe và giải đáp mọi thắc mắc của bạn về dịch vụ bay.</p>
+            </div>
+            
+            <div id="alert-message" class="alert hidden"></div>
+
+            <div class="contact-grid">
+                <div class="contact-info-panel">
+                    <h3>Thông tin liên hệ</h3>
+                    <p>Hãy liên hệ trực tiếp với chúng tôi qua các kênh dưới đây hoặc gửi form yêu cầu hỗ trợ. Đội ngũ CSKH hoạt động 24/7.</p>
+                    <div class="info-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>123 Đường Hàng Không, Quận 1, TP. Hồ Chí Minh</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fa-solid fa-phone"></i>
+                        <span>Hotline: 1900 1234 (Miễn phí cước)</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fa-solid fa-envelope"></i>
+                        <span>Email: support@flightbooking.vn</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fa-solid fa-clock"></i>
+                        <span>Giờ làm việc: 24/7 tất cả các ngày trong tuần</span>
+                    </div>
+                </div>
+
+                <div class="contact-form-panel">
+                    <h3>Gửi yêu cầu hỗ trợ</h3>
+                    <form id="contact-form" onsubmit="submitForm(event)">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="fullname">Họ và tên <span class="text-danger">*</span></label>
+                                <input type="text" id="fullname" placeholder="Nhập họ và tên của bạn">
+                            </div>
+                            <div class="input-group">
+                                <label for="email">Email <span class="text-danger">*</span></label>
+                                <input type="email" id="email" placeholder="ví dụ: abc@gmail.com">
+                            </div>
+                        </div>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="phone">Số điện thoại <span class="text-muted">(Không bắt buộc)</span></label>
+                                <input type="tel" id="phone" placeholder="Nhập số điện thoại">
+                            </div>
+                            <div class="input-group">
+                                <label for="subject">Chủ đề liên hệ <span class="text-danger">*</span></label>
+                                <select id="subject">
+                                    <option value="">-- Chọn chủ đề --</option>
+                                    <option value="Tư vấn đặt vé">Tư vấn đặt vé mới</option>
+                                    <option value="Thay đổi thông tin chuyến bay">Đổi / Trả vé máy bay</option>
+                                    <option value="Khiếu nại dịch vụ">Góp ý & Khiếu nại dịch vụ</option>
+                                    <option value="Hỗ trợ kỹ thuật">Hỗ trợ lỗi kỹ thuật / Lỗi thanh toán</option>
+                                    <option value="Khác">Vấn đề khác</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="content">Nội dung câu hỏi/yêu cầu <span class="text-danger">*</span></label>
+                            <textarea id="content" rows="6" placeholder="Nhập chi tiết thắc mắc hoặc yêu cầu của bạn (Tối thiểu 10 ký tự)..."></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="cancelForm()">Hủy bỏ</button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa-solid fa-paper-plane" style="margin-right: 5px;"></i> Gửi yêu cầu
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer"></div>
+    <script src="../../js/user/header.js"></script>
+    <script src="../../js/user/uc17_lienHe.js"></script>
+</body>
+</html>

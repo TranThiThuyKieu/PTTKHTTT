@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý tuyến bay - Admin Portal</title>
+    <link rel="stylesheet" href="../../css/admin/uc24_quanLyTuyenBay.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+<div id="admin-header">
+    <div class="admin-nav">
+        <div class="logo">
+            <h2><i class="fa-solid fa-plane-departure"></i> FlightBooking Admin</h2>
+        </div>
+        <div class="user-info">
+            <span><i class="fa-solid fa-user-tie"></i> Xin chào, Quản trị viên</span>
+        </div>
+    </div>
+</div>
+
+<main class="container">
+    <div class="page-header">
+        <h1 class="page-title">Quản lý tuyến bay</h1>
+        <button class="btn btn-primary" onclick="openForm('add')">
+            <i class="fa-solid fa-plus"></i> Thêm tuyến bay mới
+        </button>
+    </div>
+
+    <div id="alert-message" class="alert" style="display: none;"></div>
+
+    <section id="route-list-section" class="step-section active">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Mã tuyến</th>
+                        <th>Sân bay đi</th>
+                        <th>Sân bay đến</th>
+                        <th>Khoảng cách</th>
+                        <th>Thời gian bay</th>
+                        <th>Trạng thái</th>
+                        <th class="text-center">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody id="route-table-body">
+                    <!-- Dữ liệu render từ JS -->
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Modal Thêm/Sửa -->
+    <div id="route-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Thêm tuyến bay mới</h2>
+                <span class="close-btn" onclick="closeForm()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="route-form">
+                    <input type="hidden" id="route-id">
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Sân bay đi <span class="text-danger">*</span></label>
+                            <select id="departure" required>
+                                <option value="">-- Chọn điểm đi --</option>
+                                <option value="SGN">Hồ Chí Minh (SGN)</option>
+                                <option value="HAN">Hà Nội (HAN)</option>
+                                <option value="DAD">Đà Nẵng (DAD)</option>
+                                <option value="PQC">Phú Quốc (PQC)</option>
+                                <option value="VCA">Cần Thơ (VCA)</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Sân bay đến <span class="text-danger">*</span></label>
+                            <select id="arrival" required>
+                                <option value="">-- Chọn điểm đến --</option>
+                                <option value="SGN">Hồ Chí Minh (SGN)</option>
+                                <option value="HAN">Hà Nội (HAN)</option>
+                                <option value="DAD">Đà Nẵng (DAD)</option>
+                                <option value="PQC">Phú Quốc (PQC)</option>
+                                <option value="VCA">Cần Thơ (VCA)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Khoảng cách (km) <span class="text-danger">*</span></label>
+                            <input type="number" id="distance" min="1" required placeholder="Ví dụ: 1190">
+                        </div>
+                        <div class="input-group">
+                            <label>Thời gian bay dự kiến (phút) <span class="text-danger">*</span></label>
+                            <input type="number" id="duration" min="1" required placeholder="Ví dụ: 120">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Trạng thái hoạt động</label>
+                        <select id="status">
+                            <option value="active">Đang khai thác</option>
+                            <option value="inactive">Ngừng khai thác</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeForm()">Hủy bỏ</button>
+                <button class="btn btn-primary" onclick="saveRoute()">Lưu thay đổi</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Xác nhận xóa -->
+    <div id="delete-modal" class="modal">
+        <div class="modal-content modal-sm">
+            <div class="modal-header">
+                <h2>Xác nhận xóa</h2>
+                <span class="close-btn" onclick="closeDeleteModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc chắn muốn xóa tuyến bay <strong id="delete-route-code" class="text-primary"></strong>?</p>
+                <p class="small-text text-danger mt-2">
+                    <i class="fa-solid fa-triangle-exclamation"></i> 
+                    Lưu ý: Nếu tuyến bay đang được sử dụng trong chuyến bay sắp khởi hành hoặc đang mở bán vé, hệ thống sẽ từ chối xóa.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeDeleteModal()">Hủy</button>
+                <button class="btn btn-danger" onclick="confirmDelete()">Xác nhận xóa</button>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="../../js/admin/uc24_quanLyTuyenBay.js"></script>
+</body>
+</html>

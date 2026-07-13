@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đặt vé máy bay - Flight Booking</title>
+    <link rel="stylesheet" href="../../css/user/header.css">
+    <link rel="stylesheet" href="../../css/user/footer.css">
+    <link rel="stylesheet" href="../../css/user/uc08_datVe.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+    <div id="header"></div>
+    
+    <main class="container">
+        <h1 class="page-title">Tiến hành Đặt vé</h1>
+        
+        <!-- Flight Summary -->
+        <div class="flight-summary-card">
+            <div class="flight-route">
+                <span class="city">Hồ Chí Minh (SGN)</span>
+                <i class="fa-solid fa-plane"></i>
+                <span class="city">Hà Nội (HAN)</span>
+            </div>
+            <div class="flight-time">
+                Chuyến bay VN-234 | Khởi hành: 14:00 - 20/08/2026
+            </div>
+        </div>
+
+        <div id="alert-message" class="alert hidden"></div>
+
+        <!-- Step 1: Chọn hạng ghế và ghế ngồi -->
+        <section id="step-1" class="step-section active">
+            <h2>1. Chọn hạng ghế & Chỗ ngồi</h2>
+            
+            <div class="class-selection">
+                <div class="class-card selected" onclick="selectClass('eco')">
+                    <h4>Phổ thông (Economy)</h4>
+                    <p>Từ 1,500,000 VND</p>
+                </div>
+                <div class="class-card" onclick="selectClass('bus')">
+                    <h4>Thương gia (Business)</h4>
+                    <p>Từ 4,000,000 VND</p>
+                </div>
+            </div>
+
+            <div class="seat-map-container">
+                <h3>Sơ đồ ghế ngồi (<span id="current-class-label">Phổ thông</span>)</h3>
+                <div class="seat-map" id="seat-map-grid">
+                    <!-- Rendered by JS -->
+                </div>
+                <div class="seat-legend">
+                    <div class="legend-item"><div class="seat available"></div> Trống</div>
+                    <div class="legend-item"><div class="seat occupied"></div> Đã đặt</div>
+                    <div class="legend-item"><div class="seat selected"></div> Đang chọn</div>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="cancelProcess()">Hủy bỏ</button>
+                <button class="btn btn-primary" onclick="nextStep(2)">Tiếp tục <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </section>
+
+        <!-- Step 2: Thông tin hành khách -->
+        <section id="step-2" class="step-section hidden">
+            <h2>2. Thông tin hành khách</h2>
+            <form id="passenger-form">
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Danh xưng <span class="text-danger">*</span></label>
+                        <select id="p-title" required>
+                            <option value="Ông">Ông</option>
+                            <option value="Bà">Bà</option>
+                            <option value="Anh">Anh</option>
+                            <option value="Chị">Chị</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Họ và Tên (In hoa không dấu) <span class="text-danger">*</span></label>
+                        <input type="text" id="p-name" placeholder="VD: NGUYEN VAN A" required>
+                    </div>
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Ngày sinh <span class="text-danger">*</span></label>
+                        <input type="date" id="p-dob" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Số điện thoại liên hệ <span class="text-danger">*</span></label>
+                        <input type="tel" id="p-phone" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Email liên hệ <span class="text-danger">*</span></label>
+                    <input type="email" id="p-email" required>
+                </div>
+                
+                <div class="action-buttons">
+                    <button type="button" class="btn btn-secondary" onclick="prevStep(1)">Quay lại</button>
+                    <button type="button" class="btn btn-primary" onclick="validatePassengerInfo()">Tiếp tục <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Step 3: Dịch vụ bổ sung -->
+        <section id="step-3" class="step-section hidden">
+            <h2>3. Dịch vụ bổ sung</h2>
+            
+            <div class="services-list">
+                <div class="service-item">
+                    <div class="service-info">
+                        <i class="fa-solid fa-suitcase-rolling"></i>
+                        <div>
+                            <h4>Hành lý ký gửi</h4>
+                            <p>Mua thêm hành lý để chuyến đi thoải mái hơn.</p>
+                        </div>
+                    </div>
+                    <select id="srv-baggage" onchange="updateTotal()">
+                        <option value="0">Không mua thêm</option>
+                        <option value="200000">+ 15kg (200,000 VND)</option>
+                        <option value="300000">+ 25kg (300,000 VND)</option>
+                    </select>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-info">
+                        <i class="fa-solid fa-utensils"></i>
+                        <div>
+                            <h4>Suất ăn trên máy bay</h4>
+                            <p>Đặt trước suất ăn nóng hổi.</p>
+                        </div>
+                    </div>
+                    <select id="srv-meal" onchange="updateTotal()">
+                        <option value="0">Không đặt suất ăn</option>
+                        <option value="150000">Cơm gà quay (150,000 VND)</option>
+                        <option value="120000">Mì ý sốt bò băm (120,000 VND)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="prevStep(2)">Quay lại</button>
+                <button class="btn btn-primary" onclick="nextStep(4)">Tiếp tục <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </section>
+
+        <!-- Step 4: Tóm tắt & Thanh toán -->
+        <section id="step-4" class="step-section hidden">
+            <h2>4. Tóm tắt thông tin & Xác nhận</h2>
+            
+            <div class="summary-container">
+                <div class="summary-details">
+                    <div class="summary-block">
+                        <h4>Thông tin chuyến bay</h4>
+                        <p><strong>VN-234</strong> | SGN <i class="fa-solid fa-arrow-right"></i> HAN</p>
+                        <p>Ngày bay: 20/08/2026 14:00</p>
+                    </div>
+                    <div class="summary-block">
+                        <h4>Hành khách & Chỗ ngồi</h4>
+                        <p><span id="sum-name"></span></p>
+                        <p>Hạng ghế: <span id="sum-class"></span></p>
+                        <p>Ghế ngồi: <strong id="sum-seat" class="text-primary"></strong> <button class="btn-link" onclick="prevStep(1)"><i class="fa-solid fa-pen"></i> Sửa</button></p>
+                        <p style="margin-top:15px;"><button class="btn-link" onclick="prevStep(2)"><i class="fa-solid fa-pen"></i> Sửa thông tin hành khách</button></p>
+                    </div>
+                    <div class="summary-block">
+                        <h4>Dịch vụ bổ sung</h4>
+                        <ul id="sum-services" style="margin:0; padding-left: 20px;"></ul>
+                    </div>
+                </div>
+
+                <div class="summary-price">
+                    <div class="promo-code-box">
+                        <label>Mã khuyến mãi (Nhập FLIGHT2026)</label>
+                        <div style="display:flex; gap:10px;">
+                            <input type="text" id="promo-code" placeholder="Nhập mã">
+                            <button class="btn btn-secondary" onclick="applyPromo()">Áp dụng</button>
+                        </div>
+                        <small id="promo-msg" class="text-danger hidden" style="display:block; margin-top:5px;"></small>
+                    </div>
+                    <hr>
+                    <div class="price-row">
+                        <span>Giá vé cơ bản:</span>
+                        <span id="price-base">1,500,000 VND</span>
+                    </div>
+                    <div class="price-row">
+                        <span>Phí dịch vụ bổ sung:</span>
+                        <span id="price-services">0 VND</span>
+                    </div>
+                    <div class="price-row">
+                        <span>Giảm giá:</span>
+                        <span id="price-discount" class="text-success">0 VND</span>
+                    </div>
+                    <hr>
+                    <div class="price-row total">
+                        <span>Tổng tiền thanh toán:</span>
+                        <span id="price-total" class="text-primary">1,500,000 VND</span>
+                    </div>
+
+                    <button class="btn btn-primary btn-block" style="margin-top:20px;" onclick="confirmBooking()">Xác nhận đặt vé</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    <div id="footer"></div>
+    <script src="../../js/user/header.js"></script>
+    <script src="../../js/user/uc08_datVe.js"></script>
+</body>
+</html>

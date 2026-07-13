@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tra cứu chuyến bay - Flight Booking</title>
+    <link rel="stylesheet" href="../../css/user/header.css">
+    <link rel="stylesheet" href="../../css/user/footer.css">
+    <link rel="stylesheet" href="../../css/user/uc15_traCuuVe.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+    <div id="header"></div>
+    
+    <main class="main-content">
+        <div class="container lookup-container">
+            <div class="lookup-header">
+                <h1>Tra cứu vé máy bay</h1>
+                <p>Nhập mã đặt chỗ và email để kiểm tra chi tiết và tình trạng chuyến bay của bạn nhanh chóng.</p>
+            </div>
+            
+            <div id="alert-message" class="alert hidden"></div>
+
+            <div class="lookup-panel">
+                <form id="lookup-form" onsubmit="submitLookup(event)">
+                    <div class="input-group">
+                        <label for="pnr">Mã đặt chỗ (PNR) / Mã vé <span class="text-danger">*</span></label>
+                        <input type="text" id="pnr" placeholder="VD: VN8899A" style="text-transform: uppercase;">
+                    </div>
+                    <div class="input-group">
+                        <label for="email">Email liên hệ đã dùng đặt vé <span class="text-danger">*</span></label>
+                        <input type="email" id="email" placeholder="Nhập địa chỉ email của bạn">
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="cancelLookup()">Hủy bỏ</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa-solid fa-search" style="margin-right: 5px;"></i> Tra cứu
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Lookup Result Section -->
+            <div id="lookup-result" class="lookup-result-panel hidden">
+                <h3>Kết quả tìm kiếm</h3>
+                <div class="ticket-card" id="ticket-result-card">
+                    <div class="ticket-info">
+                        <div class="ticket-code" id="res-pnr">Mã Đặt Chỗ: VN8899A</div>
+                        <div class="ticket-route" id="res-route">Hà Nội (HAN) ➔ Đà Nẵng (DAD)</div>
+                        <div class="ticket-date"><i class="fa-regular fa-clock"></i> <span id="res-date">08:30 - 15/08/2026</span></div>
+                    </div>
+                    <div class="ticket-status-col">
+                        <div class="ticket-status" id="res-status">Chờ bay</div>
+                        <button class="btn btn-outline-primary mt-3" onclick="viewDetails()">Xem chi tiết vé</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div id="footer"></div>
+    <script src="../../js/user/header.js"></script>
+    <script src="../../js/user/uc15_traCuuVe.js"></script>
+</body>
+</html>
