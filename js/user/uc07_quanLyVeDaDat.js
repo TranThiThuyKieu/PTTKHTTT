@@ -113,6 +113,11 @@ function openTicketDetails(ticketId) {
             <span class="detail-label">Dịch vụ bổ sung</span>
             <span class="detail-value">${ticket.services}</span>
         </div>
+        ${ticket.status === 'cho-bay' ? `
+        <div class="modal-actions" style="margin-top: 20px; text-align: right; border-top: 1px solid var(--border-color, #cbd5e1); padding-top: 15px;">
+            <button class="btn btn-primary" onclick="window.location.href='uc12_doiChuyenBay.html'" style="padding: 10px 20px; background-color: var(--primary-color, #1d4ed8); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Đổi chuyến bay</button>
+        </div>
+        ` : ''}
     `;
     modalEl.classList.remove('hidden');
 }

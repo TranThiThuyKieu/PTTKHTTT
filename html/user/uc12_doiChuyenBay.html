@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đổi chuyến bay - Flight Booking</title>
+    <link rel="stylesheet" href="../../css/user/header.css">
+    <link rel="stylesheet" href="../../css/user/uc12_doiChuyenBay.css">
+    <link rel="stylesheet" href="../../css/user/footer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+<div id="header"></div>
+
+<main class="container">
+    <h1 class="page-title">Quản lý vé / Đổi chuyến bay</h1>
+
+    <div id="alert-message" class="alert" style="display: none;"></div>
+
+    <section id="step-1" class="step-section active">
+        <h2>Thông tin vé hiện tại</h2>
+        <div class="ticket-card">
+            <div class="ticket-header">
+                <span class="flight-code">VN-123</span>
+                <span class="flight-class badge-business">Hạng Thương gia</span>
+            </div>
+            <div class="ticket-body">
+                <div class="route">
+                    <div class="point">
+                        <h3>SGN</h3>
+                        <p>Hồ Chí Minh</p>
+                        <p class="time">08:00 - 20/08/2026</p>
+                    </div>
+                    <div class="plane-icon"><i class="fa-solid fa-plane"></i></div>
+                    <div class="point">
+                        <h3>HAN</h3>
+                        <p>Hà Nội</p>
+                        <p class="time">10:15 - 20/08/2026</p>
+                    </div>
+                </div>
+                <div class="passenger-info">
+                    <p><strong>Hành khách:</strong> Nguyễn Văn A</p>
+                    <p><strong>Ghế:</strong> 02A</p>
+                </div>
+            </div>
+            <div class="ticket-footer">
+                <button class="btn btn-primary" onclick="checkExchangeCondition()">Đổi chuyến bay</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="step-2" class="step-section" style="display: none;">
+        <h2>Tìm kiếm chuyến bay mới</h2>
+        <div class="search-box-inline">
+            <div class="input-group">
+                <label>Điểm khởi hành</label>
+                <input type="text" value="Hồ Chí Minh (SGN)" disabled>
+            </div>
+            <div class="input-group">
+                <label>Điểm đến</label>
+                <input type="text" value="Hà Nội (HAN)" disabled>
+            </div>
+            <div class="input-group">
+                <label>Ngày đi mới</label>
+                <input type="date" id="new-date">
+            </div>
+            <button class="btn btn-primary" onclick="searchNewFlights()"><i class="fa-solid fa-search"></i> Tìm chuyến</button>
+        </div>
+        <div class="action-buttons">
+            <button class="btn btn-secondary" onclick="cancelProcess()">Hủy bỏ</button>
+        </div>
+    </section>
+
+    <section id="step-3" class="step-section" style="display: none;">
+        <h2>Chọn chuyến bay & ghế ngồi</h2>
+        <div class="flight-list">
+            <div class="flight-option">
+                <div class="flight-time">
+                    <strong>14:00</strong> SGN <i class="fa-solid fa-arrow-right"></i> <strong>16:15</strong> HAN
+                </div>
+                <div class="flight-details">
+                    <p>Chuyến bay: VN-456</p>
+                    <p>Hạng: Thương gia</p>
+                </div>
+                <div class="flight-price">
+                    + 1,500,000 VND
+                </div>
+                <button class="btn btn-outline" onclick="selectFlightAndSeat(this, 1500000)">Chọn chuyến này</button>
+            </div>
+             <div class="flight-option">
+                <div class="flight-time">
+                    <strong>18:30</strong> SGN <i class="fa-solid fa-arrow-right"></i> <strong>20:45</strong> HAN
+                </div>
+                <div class="flight-details">
+                    <p>Chuyến bay: VN-789</p>
+                    <p>Hạng: Thương gia</p>
+                </div>
+                <div class="flight-price" style="color: var(--color-success);">
+                    - 500,000 VND (Hoàn tiền)
+                </div>
+                <button class="btn btn-outline" onclick="selectFlightAndSeat(this, -500000)">Chọn chuyến này</button>
+            </div>
+        </div>
+
+        <div id="seat-selection" style="display: none; margin-top: 20px;">
+            <h3>Sơ đồ ghế ngồi</h3>
+            <div class="seat-map-dummy">
+                <div class="seat available" onclick="selectSeat(this)">01A</div>
+                <div class="seat occupied">01B</div>
+                <div class="seat available" onclick="selectSeat(this)">02A</div>
+                <div class="seat available" onclick="selectSeat(this)">02B</div>
+            </div>
+            <div style="margin-top: 15px;">
+                <p>Ghế đang chọn: <strong id="selected-seat">Chưa chọn</strong></p>
+                <button class="btn btn-primary" onclick="goToSummary()" id="btn-confirm-seat" disabled>Tiếp tục</button>
+            </div>
+        </div>
+        <div class="action-buttons">
+            <button class="btn btn-secondary" onclick="cancelProcess()">Hủy bỏ</button>
+        </div>
+    </section>
+
+    <section id="step-4" class="step-section" style="display: none;">
+        <h2>Tóm tắt chi phí đổi chuyến</h2>
+        
+        <div class="summary-card">
+            <div class="summary-row">
+                <span>Giá vé cũ (đã thanh toán):</span>
+                <span>5,000,000 VND</span>
+            </div>
+            <div class="summary-row">
+                <span>Giá vé mới:</span>
+                <span id="new-price-text">6,000,000 VND</span>
+            </div>
+            <div class="summary-row">
+                <span>Phí đổi chuyến:</span>
+                <span>500,000 VND</span>
+            </div>
+            <hr>
+            <div class="summary-row total">
+                <span id="diff-label">Tổng tiền chênh lệch cần thanh toán:</span>
+                <span class="text-danger" id="diff-amount">1,500,000 VND</span>
+            </div>
+        </div>
+
+        <div class="countdown-box">
+            <p><i class="fa-regular fa-clock"></i> Thời gian giữ chỗ còn lại: <strong id="countdown-timer" class="text-danger">10:00</strong></p>
+            <p class="small-text">Vui lòng hoàn tất quá trình trong thời gian này. Quá hạn, ghế sẽ bị hủy.</p>
+        </div>
+
+        <div id="refund-form" style="display: none; margin-top: 20px;" class="card-box">
+            <h3 style="color: var(--color-success); margin-top:0;">Bạn được hoàn lại tiền thừa</h3>
+            <p class="small-text" style="margin-bottom:15px;">Vui lòng chọn phương thức nhận lại tiền hoàn chênh lệch.</p>
+            <div class="input-group">
+                <label>Tài khoản nhận tiền</label>
+                <select>
+                    <option>Sử dụng tài khoản thanh toán cũ (Visa **** 1234)</option>
+                    <option>Nhập tài khoản ngân hàng mới</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn btn-secondary" onclick="cancelProcess()">Hủy bỏ</button>
+            <button class="btn btn-primary" id="btn-payment" onclick="processPayment()">Thanh toán chênh lệch</button>
+        </div>
+    </section>
+
+    <section id="step-5" class="step-section text-center" style="display: none;">
+        <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+        <h2>Đổi chuyến bay thành công!</h2>
+        <p>Hệ thống đã cập nhật vé mới của bạn. Vé điện tử mới và hóa đơn sẽ được gửi đến email của bạn trong ít phút.</p>
+        <div class="action-buttons" style="justify-content: center; margin-top: 30px;">
+            <button class="btn btn-primary" onclick="window.location.href='trangChu.html'">Về trang chủ</button>
+        </div>
+    </section>
+
+</main>
+
+<div id="footer"></div>
+<script src="../../js/user/header.js"></script>
+<script src="../../js/user/uc12_doiChuyenBay.js"></script>
+</body>
+</html>
