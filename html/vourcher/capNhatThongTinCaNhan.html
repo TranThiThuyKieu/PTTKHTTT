@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cập nhật thông tin cá nhân</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="../../css/user/header.css">
+    <link rel="stylesheet" href="../../css/user/footer.css">
+
+    <link rel="stylesheet" href="../../css/vourcher/capNhatThongTinCaNhan.css">
+</head>
+
+<body>
+    <div id="header"></div>
+
+    <main class="profile-page">
+        <section class="profile-card">
+            <div class="profile-card__header">
+                <div>
+                    <p class="eyebrow">Tài khoản khách hàng</p>
+                    <h1>Cập nhật thông tin cá nhân</h1>
+                    <p>Quản lý thông tin liên hệ, địa chỉ và dữ liệu bảo mật của bạn.</p>
+                </div>
+                <div class="avatar-badge">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+            </div>
+
+            <form id="profileForm" class="profile-form">
+                <div class="form-row">
+                    <label class="form-group">
+                        <span>Họ và tên</span>
+                        <input type="text" id="fullName" name="fullName" placeholder="Nhập họ tên" required>
+                    </label>
+                    <label class="form-group">
+                        <span>Ngày sinh</span>
+                        <input type="date" id="dob" name="dob">
+                    </label>
+                </div>
+
+                <div class="form-row">
+                    <label class="form-group">
+                        <span>Email</span>
+                        <input type="email" id="email" name="email" placeholder="example@email.com" required>
+                    </label>
+                    <label class="form-group">
+                        <span>Số điện thoại</span>
+                        <input type="tel" id="phone" name="phone" placeholder="0987 654 321">
+                    </label>
+                </div>
+
+                <div class="form-row">
+                    <label class="form-group">
+                        <span>Giới tính</span>
+                        <select id="gender" name="gender">
+                            <option value="Nam">Nam</option>
+                            <option value="Nữ">Nữ</option>
+                            <option value="Khác">Khác</option>
+                        </select>
+                    </label>
+                    <label class="form-group">
+                        <span>Quốc tịch</span>
+                        <input type="text" id="nationality" name="nationality" placeholder="Ví dụ: Việt Nam">
+                    </label>
+                </div>
+
+                <label class="form-group full-width">
+                    <span>Địa chỉ</span>
+                    <textarea id="address" name="address" rows="3" placeholder="Nhập địa chỉ hiện tại"></textarea>
+                </label>
+
+                <label class="form-group full-width">
+                    <span>Mật khẩu cũ</span>
+                    <input type="password" id="password" name="password" placeholder="Nhập mật khẩu cũ">
+                </label>
+                <label class="form-group full-width">
+                    <span>Mật khẩu mới</span>
+                    <input type="password" id="password" name="password" placeholder="Nhập mật khẩu mới">
+                </label>
+
+                <div class="message" id="messageBox" aria-live="polite"></div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="resetBtn">Đặt lại</button>
+                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                </div>
+            </form>
+        </section>
+
+        <aside class="info-panel">
+            <h2>Thông tin hiện tại</h2>
+            <ul class="info-list">
+                <li>
+                    <span>Họ tên</span>
+                    <strong id="summaryName">--</strong>
+                </li>
+                <li>
+                    <span>Email</span>
+                    <strong id="summaryEmail">--</strong>
+                </li>
+                <li>
+                    <span>Điện thoại</span>
+                    <strong id="summaryPhone">--</strong>
+                </li>
+                <li>
+                    <span>Địa chỉ</span>
+                    <strong id="summaryAddress">--</strong>
+                </li>
+            </ul>
+
+            <div class="note-box">
+                <h3>Gợi ý bảo mật</h3>
+                <p>Nên cập nhật mật khẩu định kỳ và kiểm tra lại số điện thoại để nhận thông báo đặt vé.</p>
+            </div>
+        </aside>
+    </main>
+    <div id="footer"></div>
+
+    <script src="../../js/user/header.js"></script>
+    <script src="../../js/vourcher/capNhatThongTinCaNhan.js"></script>
+
+</body>
+
+</html>
