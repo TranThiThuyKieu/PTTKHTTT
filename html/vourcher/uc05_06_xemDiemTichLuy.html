@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xem điểm tích lũy - Flight Booking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="../../css/user/header.css">
+    <link rel="stylesheet" href="../../css/user/footer.css">
+    <link rel="stylesheet" href="../../css/vourcher/xemDiemTichLuy.css">
+</head>
+
+<body>
+    <div id="header"></div>
+
+    <main class="page-shell">
+        <section class="page-card">
+            <div class="page-header">
+                <div>
+                    <p class="eyebrow">Điểm thưởng</p>
+                    <h1>Xem điểm tích lũy</h1>
+                    <p>Giữ theo dõi điểm thưởng của bạn và tận dụng ưu đãi dành riêng cho hạng thành viên.</p>
+                </div>
+                <div class="tier-badge">
+                    <i class="fa-solid fa-medal"></i>
+                    <span>Hạng Vàng</span>
+                </div>
+            </div>
+
+            <div class="overview-grid">
+                <div class="summary-card main-card">
+                    <span>Điểm hiện có</span>
+                    <strong id="balancePoints">3.450</strong>
+                    <p>Đủ điều kiện đổi ưu đãi vé máy bay hoặc nâng hạng.</p>
+                </div>
+                <div class="summary-card">
+                    <span>Điểm sắp hết hạn</span>
+                    <strong>180</strong>
+                </div>
+                <div class="summary-card">
+                    <span>Tổng điểm đã nhận</span>
+                    <strong>4.200</strong>
+                </div>
+            </div>
+
+            <div class="progress-card">
+                <div class="progress-header">
+                    <h2>Tiến trình lên hạng Bạch Kim</h2>
+                    <span>550 / 1.000 điểm</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+                <p>Còn 550 điểm nữa để mở khóa các ưu đãi dành cho hạng Bạch Kim.</p>
+            </div>
+
+            <div class="benefits-panel">
+                <div class="tab-switcher" role="tablist" aria-label="Chuyển tab điểm thưởng">
+                    <button class="tab-btn active" data-tab="offers" type="button">Ưu đãi</button>
+                    <button class="tab-btn" data-tab="history" type="button">Lịch sử tích điểm</button>
+                </div>
+
+                <div id="offersPanel" class="tab-panel active">
+                    <h2>Ưu đãi có thể đổi</h2>
+                    <div id="benefitsList" class="benefits-list"></div>
+                </div>
+
+                <div id="historyPanel" class="tab-panel">
+                    <h2>Lịch sử tích điểm</h2>
+                    <div id="historyList" class="history-list"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer"></div>
+
+    <script src="../../js/user/header.js"></script>
+    <script src="../../js/vourcher/xemDiemTichLuy.js"></script>
+</body>
+
+</html>
