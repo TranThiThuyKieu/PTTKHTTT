@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const basePath = window.location.pathname.includes('/admin/') ? './' : 'html/admin/';
-    
+
     // Load Sidebar
     fetch(basePath + 'sidebar.html')
         .then(res => {
@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const sidebarContainer = document.getElementById('sidebar-container');
             if (sidebarContainer) {
                 sidebarContainer.innerHTML = data;
-                
+
                 // Highlight active link
                 const currentPath = window.location.pathname.split('/').pop();
                 const navItems = sidebarContainer.querySelectorAll('.nav-item');
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const headerContainer = document.getElementById('header-container');
             if (headerContainer) {
                 headerContainer.innerHTML = data;
-                
+
                 // Setup Toggle Sidebar Button
                 const toggleBtn = document.getElementById('toggle-sidebar');
                 if (toggleBtn) {
