@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý hãng hàng không - Admin Portal</title>
+    <link rel="stylesheet" href="../../css/admin/uc25_quanLyHangHangKhong.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+<div id="admin-header">
+    <div class="admin-nav">
+        <div class="logo">
+            <h2><i class="fa-solid fa-plane-departure"></i> FlightBooking Admin</h2>
+        </div>
+        <div class="user-info">
+            <span><i class="fa-solid fa-user-tie"></i> Xin chào, Quản trị viên</span>
+        </div>
+    </div>
+</div>
+
+<main class="container">
+    <div class="page-header">
+        <h1 class="page-title">Quản lý hãng hàng không</h1>
+        <button class="btn btn-primary" onclick="openForm('add')">
+            <i class="fa-solid fa-plus"></i> Thêm hãng hàng không
+        </button>
+    </div>
+
+    <div id="alert-message" class="alert" style="display: none;"></div>
+
+    <section id="airline-list-section" class="step-section active">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th width="10%">Logo</th>
+                        <th width="15%">Mã hãng</th>
+                        <th width="30%">Tên hãng hàng không</th>
+                        <th width="15%">Quốc gia</th>
+                        <th width="15%">Trạng thái</th>
+                        <th width="15%" class="text-center">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody id="airline-table-body">
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <div id="airline-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Thêm hãng hàng không</h2>
+                <span class="close-btn" onclick="closeForm()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="airline-form">
+                    <input type="hidden" id="airline-id">
+                    
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Mã hãng (Airline Code) <span class="text-danger">*</span></label>
+                            <input type="text" id="airline-code" required placeholder="Ví dụ: VN, VJ, QH">
+                            <small class="help-text">Mã hãng phải là duy nhất.</small>
+                        </div>
+                        <div class="input-group">
+                            <label>Tên hãng hàng không <span class="text-danger">*</span></label>
+                            <input type="text" id="airline-name" required placeholder="Ví dụ: Vietnam Airlines">
+                        </div>
+                    </div>
+
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Quốc gia <span class="text-danger">*</span></label>
+                            <input type="text" id="airline-country" required placeholder="Ví dụ: Việt Nam">
+                        </div>
+                        <div class="input-group">
+                            <label>Trạng thái hợp tác <span class="text-danger">*</span></label>
+                            <select id="airline-status" required>
+                                <option value="active">Đang hợp tác</option>
+                                <option value="inactive">Ngừng hợp tác</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Logo (Đường dẫn ảnh hoặc Tên file) <span class="text-danger">*</span></label>
+                        <input type="text" id="airline-logo" required placeholder="Ví dụ: logo_vn.png">
+                        <small class="help-text">Chỉ chấp nhận định dạng .jpg, .jpeg, .png</small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeForm()">Hủy bỏ</button>
+                <button class="btn btn-primary" onclick="saveAirline()">Lưu thay đổi</button>
+            </div>
+        </div>
+    </div>
+    <div id="delete-modal" class="modal">
+        <div class="modal-content modal-sm">
+            <div class="modal-header">
+                <h2>Xác nhận xóa</h2>
+                <span class="close-btn" onclick="closeDeleteModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc chắn muốn xóa hãng hàng không <strong id="delete-airline-name" class="text-primary"></strong>?</p>
+                <p class="small-text text-danger mt-2">
+                    <i class="fa-solid fa-triangle-exclamation"></i> 
+                    Lưu ý: Không thể xóa hãng hàng không đang được sử dụng trong các chuyến bay của hệ thống.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeDeleteModal()">Hủy</button>
+                <button class="btn btn-danger" onclick="confirmDelete()">Xác nhận xóa</button>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="../../js/admin/uc25_quanLyHangHangKhong.js"></script>
+</body>
+</html>
