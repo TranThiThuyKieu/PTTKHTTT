@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý thống kê - Admin Portal</title>
+    <link rel="stylesheet" href="../../css/admin/uc19_quanLyThongKe.css">
+    <link rel="stylesheet" href="../../css/admin/layout.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="admin-wrapper">
+    <div id="sidebar-container"></div>
+    <div class="main-wrapper">
+        <div id="header-container"></div>
+
+<main class="container">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Quản lý thống kê & Báo cáo</h1>
+            <p class="page-subtitle">Theo dõi hoạt động kinh doanh và vận hành của hãng bay</p>
+        </div>
+        <button class="btn btn-export" onclick="exportPDF()" id="export-btn" disabled>
+            <i class="fa-solid fa-file-pdf"></i> Xuất báo cáo PDF
+        </button>
+    </div>
+
+    <!-- Filter Section -->
+    <div class="filter-card">
+        <div class="filter-row">
+            <div class="filter-group">
+                <label for="time-range"><i class="fa-regular fa-clock"></i> Mốc thời gian</label>
+                <select id="time-range" onchange="toggleDatePicker()">
+                    <option value="all" selected>Toàn thời gian</option>
+                    <option value="month">Theo tháng</option>
+                    <option value="week">Theo tuần</option>
+                </select>
+            </div>
+            <div class="filter-group" id="date-picker-group" style="display: none;">
+                <label id="date-label" for="date-picker"><i class="fa-regular fa-calendar"></i> Chọn thời gian</label>
+                <input type="month" id="date-picker" class="date-input">
+            </div>
+            <div class="filter-group">
+                <label for="criteria"><i class="fa-solid fa-filter"></i> Tiêu chí thống kê</label>
+                <select id="criteria">
+                    <option value="revenue">Doanh thu</option>
+                    <option value="tickets">Số lượng vé đã bán</option>
+                    <option value="frequency">Tần suất bay</option>
+                    <option value="cancel_rate">Tỷ lệ hủy vé</option>
+                    <option value="customers">Lượng khách hàng mới</option>
+                    <option value="occupancy">Tỷ lệ lấp đầy ghế</option>
+                </select>
+            </div>
+            <div class="filter-group filter-actions">
+                <button class="btn btn-primary" onclick="performStatistics()">
+                    <i class="fa-solid fa-chart-simple"></i> Thực hiện thống kê
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="alert-message" class="alert" style="display: none;">
+        <span id="alert-icon"></span>
+        <span id="alert-text"></span>
+    </div>
+
+    <div id="results-area" style="display: none;">
+        <!-- Overview Cards -->
+        <div class="overview-cards" id="overview-cards">
+            <!-- Rendered by JS -->
+        </div>
+
+        <!-- Chart Section -->
+        <div class="chart-container">
+            <div class="chart-header">
+                <h3 id="chart-title">Biểu đồ thống kê</h3>
+            </div>
+            <div class="chart-body">
+                <canvas id="statChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+</main>
+    </div>
+</div>
+
+<script src="../../js/admin/layout.js"></script>
+<script src="../../js/admin/uc19_quanLyThongKe.js"></script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý chuyến bay - Admin Portal</title>
+    <link rel="stylesheet" href="../../css/admin/uc26_quanLyChuyenBay.css">
+    <link rel="stylesheet" href="../../css/admin/layout.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+<div class="admin-wrapper">
+    <div id="sidebar-container"></div>
+    <div class="main-wrapper">
+        <div id="header-container"></div>
+
+<main class="container">
+    <div class="page-header">
+        <h1 class="page-title">Quản lý chuyến bay</h1>
+        <button class="btn btn-primary" onclick="openForm('add')">
+            <i class="fa-solid fa-plus"></i> Thêm chuyến bay mới
+        </button>
+    </div>
+
+    <div id="alert-message" class="alert" style="display: none;"></div>
+
+    <section id="flight-list-section" class="step-section active">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Mã CB</th>
+                        <th>Tuyến bay</th>
+                        <th>Máy bay</th>
+                        <th>Khởi hành</th>
+                        <th>Hạ cánh</th>
+                        <th>Giá vé</th>
+                        <th>Trạng thái</th>
+                        <th class="text-center">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody id="flight-table-body">
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <div id="flight-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Thêm chuyến bay mới</h2>
+                <span class="close-btn" onclick="closeForm()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="flight-form">
+                    <input type="hidden" id="flight-id">
+                    
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Mã CB <span class="text-danger">*</span></label>
+                            <input type="text" id="flight-code" required placeholder="Ví dụ: VN123">
+                        </div>
+                        <div class="input-group">
+                            <label>Tuyến bay <span class="text-danger">*</span></label>
+                            <select id="route" required>
+                                <option value="">-- Chọn tuyến bay --</option>
+                                <option value="SGN-HAN">Hồ Chí Minh (SGN) ➔ Hà Nội (HAN)</option>
+                                <option value="HAN-DAD">Hà Nội (HAN) ➔ Đà Nẵng (DAD)</option>
+                                <option value="DAD-SGN">Đà Nẵng (DAD) ➔ Hồ Chí Minh (SGN)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Máy bay <span class="text-danger">*</span></label>
+                            <select id="aircraft" required>
+                                <option value="">-- Chọn máy bay --</option>
+                                <option value="A320">Airbus A320</option>
+                                <option value="A321">Airbus A321</option>
+                                <option value="B787">Boeing 787</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Giá vé cơ bản (VND) <span class="text-danger">*</span></label>
+                            <input type="number" id="price" min="1" required placeholder="Ví dụ: 1500000">
+                        </div>
+                    </div>
+                    
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Khởi hành <span class="text-danger">*</span></label>
+                            <input type="datetime-local" id="departure-time" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Hạ cánh <span class="text-danger">*</span></label>
+                            <input type="datetime-local" id="arrival-time" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Trạng thái chuyến bay <span class="text-danger">*</span></label>
+                        <select id="status" required>
+                            <option value="cho-bay">Chờ bay (Bình thường)</option>
+                            <option value="hoan-chuyen">Hoãn chuyến</option>
+                            <option value="huy-chuyen">Hủy chuyến</option>
+                            <option value="da-bay">Đã bay</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeForm()">Hủy bỏ</button>
+                <button class="btn btn-primary" onclick="saveFlight()">Lưu thay đổi</button>
+            </div>
+        </div>
+    </div>
+    <div id="delete-modal" class="modal">
+        <div class="modal-content modal-sm">
+            <div class="modal-header">
+                <h2>Xác nhận xóa</h2>
+                <span class="close-btn" onclick="closeDeleteModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc chắn muốn xóa chuyến bay <strong id="delete-flight-code" class="text-primary"></strong>?</p>
+                <p class="small-text text-danger mt-2">
+                    <i class="fa-solid fa-triangle-exclamation"></i> 
+                    Lưu ý: Nếu chuyến bay đã có khách đặt vé hoặc thanh toán, hệ thống sẽ từ chối thao tác xóa.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeDeleteModal()">Hủy</button>
+                <button class="btn btn-danger" onclick="confirmDelete()">Xác nhận xóa</button>
+            </div>
+        </div>
+    </div>
+</main>
+    </div>
+</div>
+
+<script src="../../js/admin/layout.js"></script>
+<script src="../../js/admin/uc26_quanLyChuyenBay.js"></script>
+</body>
+</html>
