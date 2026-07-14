@@ -58,7 +58,19 @@ document.addEventListener("DOMContentLoaded", () => {
 function renderTickets() {
     ticketListEl.innerHTML = '';
     ticketListEl.classList.remove('hidden');
-
+    if (mockTickets.length === 0) {
+        ticketListEl.innerHTML = `
+            <div class="empty-state">
+                <h2>Bạn chưa có hành trình nào.</h2>
+                <p>Hãy bắt đầu lên kế hoạch cho chuyến đi tiếp theo của bạn ngay hôm nay.</p>
+                <div class="empty-actions">
+                    <button class="btn btn-secondary" onclick="window.location.href='trangChu.html'">Quay lại trang chủ</button>
+                    <button class="btn btn-primary" onclick="window.location.href='uc16_timKiemChuyenBay.html'">Đặt vé ngay</button>
+                </div>
+            </div>
+        `;
+        return;
+    }
     mockTickets.forEach(ticket => {
         const card = document.createElement('div');
         card.className = `ticket-card status-${ticket.status}`;
@@ -157,8 +169,9 @@ function openTicketDetails(ticketId) {
             <span class="detail-value">${ticket.services}</span>
         </div>
         ${ticket.status === 'cho-bay' ? `
-        <div class="modal-actions" style="margin-top: 20px; text-align: right; border-top: 1px solid var(--border-color, #cbd5e1); padding-top: 15px;">
-            <button class="btn btn-primary" onclick="window.location.href='uc12_doiChuyenBay.html'" style="padding: 10px 20px; background-color: var(--primary-color, #1d4ed8); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Đổi chuyến bay</button>
+        <div class="modal-actions" style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid var(--border-color, #cbd5e1); padding-top: 15px;">
+            <button class="btn" onclick="window.location.href='uc11_huyVe.html'" style="padding: 10px 20px; background-color: #e74c3c; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Yêu cầu hủy vé</button>
+            <button class="btn btn-primary" onclick="window.location.href='uc12_doiChuyenBay.html'" style="padding: 10px 20px; background-color: #0066cc; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Đổi chuyến bay</button>
         </div>
         ` : ''}
     `;

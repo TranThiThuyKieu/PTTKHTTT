@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yêu cầu hủy vé - Flight Booking</title>
+    <link rel="stylesheet" href="../../css/user/header.css">
+    <link rel="stylesheet" href="../../css/user/footer.css">
+    <link rel="stylesheet" href="../../css/user/uc11_huyVe.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+    <div id="header"></div>
+    <main class="main-content">
+        <div class="container">
+            <div class="form-container">
+                <div class="page-header">
+                    <h1>Yêu cầu hủy vé</h1>
+                    <p>Vui lòng điền lý do hủy vé. Việc hủy vé có thể phát sinh phí theo quy định của hãng bay.</p>
+                </div>
+                
+                <div id="alert-message" class="alert hidden"></div>
+
+                <div class="ticket-summary">
+                    <h3>Thông tin chuyến bay</h3>
+                    <div class="summary-details">
+                        <p><strong>Mã đặt chỗ:</strong> <span id="summary-code">VN8899A</span></p>
+                        <p><strong>Chặng bay:</strong> <span id="summary-route">Hà Nội (HAN) ➔ Đà Nẵng (DAD)</span></p>
+                        <p><strong>Ngày giờ bay:</strong> <span id="summary-date">08:30 - 15/08/2026</span></p>
+                        <p><strong>Hành khách:</strong> <span id="summary-passenger">Nguyễn Văn A</span></p>
+                    </div>
+                </div>
+
+                <form id="cancel-ticket-form">
+                    <div class="form-group">
+                        <label for="cancel-reason">Lý do hủy vé <span class="required">*</span></label>
+                        <select id="cancel-reason" required>
+                            <option value="">-- Chọn lý do --</option>
+                            <option value="doi_lich_trinh">Thay đổi lịch trình cá nhân</option>
+                            <option value="suc_khoe">Vấn đề sức khỏe</option>
+                            <option value="thoi_tiet">Lo ngại thời tiết xấu</option>
+                            <option value="hang_bay_thay_doi">Hãng bay thay đổi giờ bay</option>
+                            <option value="khac">Lý do khác</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group hidden" id="other-reason-group">
+                        <label for="other-reason">Chi tiết lý do khác</label>
+                        <textarea id="other-reason" rows="3" placeholder="Nhập chi tiết lý do hủy vé..."></textarea>
+                    </div>
+
+                    <div class="warning-box">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <p><strong>Lưu ý:</strong> Sau khi gửi yêu cầu, hệ thống sẽ tính toán phí hủy (nếu có) và gửi thông báo xác nhận qua email của bạn. Tiến trình này không thể hoàn tác.</p>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="window.location.href='uc07_quanLyVeDaDat.html'">Quay lại</button>
+                        <button type="submit" class="btn btn-danger">Gửi yêu cầu hủy vé</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+    <div id="footer"></div>
+    <script src="../../js/user/header.js"></script>
+    <script src="../../js/user/uc11_huyVe.js"></script>
+</body>
+</html>
