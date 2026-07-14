@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý người dùng - Admin Portal</title>
+    <link rel="stylesheet" href="../../css/admin/uc20_quanLyNguoiDung.css">
+    <link rel="stylesheet" href="../../css/admin/layout.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+<div class="admin-wrapper">
+    <div id="sidebar-container"></div>
+    <div class="main-wrapper">
+        <div id="header-container"></div>
+
+<main class="container">
+    <div class="page-header">
+        <h1 class="page-title">Quản lý người dùng</h1>
+        <!-- Quản lý người dùng không yêu cầu thêm mới từ UC này, chỉ cập nhật/khóa/tìm kiếm, 
+             nhưng ta có thể để sẵn nếu hệ thống cần, hoặc chỉ có chức năng search -->
+    </div>
+
+    <div id="alert-message" class="alert" style="display: none;"></div>
+
+    <section class="step-section active">
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Tìm kiếm theo tên, email, sđt...">
+            <button class="btn btn-primary" onclick="searchUser()"><i class="fa-solid fa-magnifying-glass"></i> Tìm kiếm</button>
+            <button class="btn btn-secondary" onclick="clearSearch()"><i class="fa-solid fa-rotate-left"></i> Bỏ lọc</button>
+        </div>
+
+        <div class="table-responsive mt-3">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Họ và tên</th>
+                        <th>Email</th>
+                        <th>Số điện thoại</th>
+                        <th>Vai trò</th>
+                        <th>Trạng thái</th>
+                        <th class="text-center">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody id="user-table-body">
+                    <!-- Dữ liệu render từ JS -->
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Modal Sửa/Phân quyền -->
+    <div id="user-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Cập nhật thông tin người dùng</h2>
+                <span class="close-btn" onclick="closeForm()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="user-form">
+                    <input type="hidden" id="user-id">
+                    <input type="hidden" id="original-email">
+                    <input type="hidden" id="original-phone">
+                    
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Họ và tên <span class="text-danger">*</span></label>
+                            <input type="text" id="user-name" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Số điện thoại <span class="text-danger">*</span></label>
+                            <input type="text" id="user-phone" required>
+                        </div>
+                    </div>
+                    
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Email <span class="text-danger">*</span></label>
+                            <input type="email" id="user-email" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Vai trò <span class="text-danger">*</span></label>
+                            <select id="user-role">
+                                <option value="admin">Quản trị viên</option>
+                                <option value="coordinator">Nhân viên điều phối</option>
+                                <option value="customer">Khách hàng</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeForm()">Hủy bỏ</button>
+                <button class="btn btn-primary" onclick="saveUser()">Lưu thay đổi</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Xác nhận Khóa/Mở khóa -->
+    <div id="lock-modal" class="modal">
+        <div class="modal-content modal-sm">
+            <div class="modal-header">
+                <h2 id="lock-modal-title">Xác nhận thao tác</h2>
+                <span class="close-btn" onclick="closeLockModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p id="lock-modal-message"></p>
+                <p class="small-text text-danger mt-2" id="lock-warning-text" style="display: none;">
+                    <i class="fa-solid fa-triangle-exclamation"></i> 
+                    Lưu ý: Không thể khóa tài khoản quản trị viên cuối cùng của hệ thống.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeLockModal()">Hủy</button>
+                <button class="btn btn-danger" id="btn-confirm-lock" onclick="confirmLock()">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</main>
+    </div>
+</div>
+
+<script src="../../js/admin/layout.js"></script>
+<script src="../../js/admin/uc20_quanLyNguoiDung.js"></script>
+</body>
+</html>
