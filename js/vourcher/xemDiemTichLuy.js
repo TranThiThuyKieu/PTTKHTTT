@@ -1,14 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    Promise.all([
-        fetch('../user/header.html').then(response => response.text()),
-        fetch('../user/footer.html').then(response => response.text())
-    ])
-        .then(([headerHtml, footerHtml]) => {
-            document.getElementById('header').innerHTML = headerHtml;
-            document.getElementById('footer').innerHTML = footerHtml;
-            if (typeof initHeader === 'function') initHeader();
-        })
-        .catch(error => console.error('Không thể tải header/footer:', error));
 
     const benefits = [
         { title: 'Giảm 10% phí hành lý', detail: 'Áp dụng cho chuyến bay trong tháng', points: '1.500 điểm' },
