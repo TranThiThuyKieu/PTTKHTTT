@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đổi Điểm Tích Lũy - Flight Booking</title>
+    <link rel="stylesheet" href="../../css/user/header.css">
+    <link rel="stylesheet" href="../../css/user/footer.css">
+    <link rel="stylesheet" href="../../css/user/uc06_doiDiemTichLuy.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+    <div id="header"></div>
+
+    <main class="main-content">
+        <div class="container reward-container">
+            <div class="reward-header">
+                <div class="points-summary">
+                    <h2>Điểm tích lũy hiện tại</h2>
+                    <div class="points-value" id="current-points">15000</div>
+                    <p>điểm</p>
+                </div>
+                <div class="reward-title">
+                    <h1>Đổi Điểm Tích Lũy</h1>
+                    <p>Sử dụng điểm của bạn để đổi lấy các ưu đãi hấp dẫn</p>
+                </div>
+            </div>
+
+            <div id="alert-message" class="alert hidden"></div>
+
+            <div class="reward-grid" id="reward-list">
+                <!-- Dữ liệu render từ JS -->
+            </div>
+            
+            <div id="empty-state" class="empty-state hidden">
+                <i class="fa-solid fa-gift"></i>
+                <p>Hiện tại chưa có ưu đãi nào khả dụng.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Chi tiết và Xác nhận đổi -->
+    <div id="reward-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Chi tiết ưu đãi</h2>
+                <span class="close-btn" onclick="closeRewardModal()">&times;</span>
+            </div>
+            <div class="modal-body" id="reward-detail-content">
+                <!-- Nội dung render từ JS -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeRewardModal()">Hủy</button>
+                <button class="btn btn-primary" id="btn-confirm-redeem" onclick="confirmRedeem()">
+                    Xác nhận đổi điểm
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Cảnh báo đã sở hữu mã cùng loại -->
+    <div id="duplicate-warning-modal" class="modal">
+        <div class="modal-content modal-sm">
+            <div class="modal-header">
+                <h2>Cảnh báo</h2>
+                <span class="close-btn" onclick="closeWarningModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p><i class="fa-solid fa-triangle-exclamation" style="color: #f59e0b; margin-right: 8px;"></i>
+                Bạn đang có mã ưu đãi cùng loại chưa sử dụng. Bạn có muốn tiếp tục đổi không?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeWarningModal()">Hủy giao dịch</button>
+                <button class="btn btn-warning" onclick="proceedRedeem()">Tiếp tục đổi</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer"></div>
+    <script src="../../js/user/header.js"></script>
+    <script src="../../js/user/uc06_doiDiemTichLuy.js"></script>
+</body>
+</html>
