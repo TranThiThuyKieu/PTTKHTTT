@@ -183,3 +183,11 @@ body {
 
 /* Hide original header to prevent flash before JS load if we forgot to remove it */
 #admin-header { display: none !important; }
+
+.main-wrapper .container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 30px;
+    width: 100%;
+    min-height: calc(100vh - 130px);
+}

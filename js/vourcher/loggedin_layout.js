@@ -1,5 +1,5 @@
 // loggedin_layout.js — nguồn fetch DUY NHẤT cho header
-fetch("../vourcher/header_logged.html")
+fetch("../user/header.html")
     .then(response => {
         if (!response.ok) throw new Error("Header không tồn tại: " + response.status);
         return response.text();
