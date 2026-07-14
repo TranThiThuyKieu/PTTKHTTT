@@ -1,0 +1,226 @@
+:root {
+    --primary-color: #1d4ed8;
+    --primary-hover: #1e40af;
+    --bg-color: #f8fafc;
+    --card-color: #ffffff;
+    --text-main: #0f172a;
+    --text-sub: #64748b;
+    --border-color: #e2e8f0;
+}
+
+body {
+    margin: 0;
+    background: var(--bg-color);
+    color: var(--text-main);
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+.complaint-page {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+    max-width: 1200px;
+    margin: 32px auto 48px;
+    padding: 0 24px;
+}
+
+.complaint-card,
+.support-panel {
+    background: var(--card-color);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+}
+
+.complaint-card {
+    padding: 28px;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: 24px;
+}
+
+.eyebrow {
+    margin: 0 0 6px;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+}
+
+.page-header h1 {
+    margin: 0 0 8px;
+    font-size: 30px;
+}
+
+.page-header p {
+    margin: 0;
+    color: var(--text-sub);
+    line-height: 1.6;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    border-radius: 16px;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.status-badge.info {
+    background: #eff6ff;
+    color: #1d4ed8;
+}
+
+.status-badge i {
+    font-size: 18px;
+}
+
+.complaint-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-group span {
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 14px 16px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.12);
+}
+
+.full-width {
+    width: 100%;
+}
+
+.file-input-group input[type="file"] {
+    padding: 10px 14px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.btn {
+    border: none;
+    border-radius: 999px;
+    padding: 12px 20px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+}
+
+.btn-secondary {
+    background: #e2e8f0;
+    color: var(--text-main);
+}
+
+.support-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 24px;
+}
+
+.panel-card {
+    background: #f8fafc;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.panel-card h2,
+.panel-card h3 {
+    margin-top: 0;
+    margin-bottom: 14px;
+}
+
+.panel-card ul {
+    margin: 0;
+    padding-left: 18px;
+    color: var(--text-sub);
+    line-height: 1.8;
+}
+
+.panel-card ul li {
+    margin-bottom: 10px;
+}
+
+.contact-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+}
+
+.contact-card p {
+    margin: 0 0 10px;
+    color: var(--text-sub);
+    line-height: 1.7;
+}
+
+.contact-card strong {
+    color: var(--text-main);
+}
+
+@media (max-width: 960px) {
+    .complaint-page {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .page-header {
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khiếu nại chuyến bay</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="../../css/vourcher/header_logged.css">
+    <link rel="stylesheet" href="../../css/user/footer.css">
+    <link rel="stylesheet" href="../../css/user/header.css">
+    <link rel="stylesheet" href="../../css/vourcher/khieuNaiChuyenBay.css">
+</head>
+
+<body>
+    <div id="header"></div>
+
+    <main class="complaint-page">
+        <section class="complaint-card">
+            <div class="page-header">
+                <div>
+                    <p class="eyebrow">Khiếu nại hành khách</p>
+                    <h1>Khiếu nại chuyến bay</h1>
+                    <p>Gửi yêu cầu khiếu nại cho chuyến bay bị trễ, hủy hoặc dịch vụ không như mong đợi.</p>
+                </div>
+                <div class="status-badge info">
+                    <i class="fa-solid fa-plane-circle-exclamation"></i>
+                </div>
+            </div>
+
+            <form class="complaint-form" id="complaintForm">
+                <div class="form-row">
+                    <label class="form-group">
+                        <span>Mã vé</span>
+                        <input type="text" name="ticketCode" placeholder="Nhập mã vé" required>
+                    </label>
+                    <label class="form-group">
+                        <span>Mã chuyến bay</span>
+                        <input type="text" name="flightNumber" placeholder="VD: VN1234" required>
+                    </label>
+                </div>
+
+                <div class="form-row">
+                    <label class="form-group">
+                        <span>Ngày bay</span>
+                        <input type="date" name="flightDate" required>
+                    </label>
+                    <label class="form-group">
+                        <span>Thời gian bay</span>
+                        <input type="time" name="flightTime">
+                    </label>
+                </div>
+
+                <div class="form-row">
+                    <label class="form-group">
+                        <span>Họ và tên</span>
+                        <input type="text" name="fullName" placeholder="Nhập họ tên" required>
+                    </label>
+                    <label class="form-group">
+                        <span>Email</span>
+                        <input type="email" name="email" placeholder="example@email.com" required>
+                    </label>
+                </div>
+
+                <div class="form-row">
+                    <label class="form-group">
+                        <span>Số điện thoại</span>
+                        <input type="tel" name="phone" placeholder="0987 654 321">
+                    </label>
+                    <label class="form-group">
+                        <span>Loại khiếu nại</span>
+                        <select name="complaintType" required>
+                            <option value="">Chọn loại khiếu nại</option>
+                            <option value="delay">Trễ chuyến</option>
+                            <option value="cancel">Hủy chuyến</option>
+                            <option value="service">Dịch vụ kém</option>
+                            <option value="luggage">Hành lý</option>
+                            <option value="food">Ăn uống</option>
+                            <option value="other">Khác</option>
+                        </select>
+                    </label>
+                </div>
+
+                <label class="form-group full-width">
+                    <span>Chi tiết khiếu nại</span>
+                    <textarea name="details" rows="6" placeholder="Mô tả rõ ràng vấn đề bạn gặp phải..."
+                        required></textarea>
+                </label>
+
+                <label class="form-group full-width file-input-group">
+                    <span>Đính kèm hồ sơ (tùy chọn)</span>
+                    <input type="file" name="attachment" accept="image/*,.pdf">
+                </label>
+
+                <div class="form-actions">
+                    <button type="reset" class="btn btn-secondary">Xóa</button>
+                    <button type="submit" class="btn btn-primary">Gửi khiếu nại</button>
+                </div>
+            </form>
+        </section>
+
+        <aside class="support-panel">
+            <div class="panel-card">
+                <h2>Hướng dẫn gửi khiếu nại</h2>
+                <ul>
+                    <li>Nhập đầy đủ mã vé và mã chuyến bay để hệ thống xác thực nhanh.</li>
+                    <li>Chọn đúng loại khiếu nại để bộ phận hỗ trợ xử lý hiệu quả.</li>
+                    <li>Mô tả chi tiết sự cố, thời gian và các bước đã xảy ra.</li>
+                    <li>Đính kèm hình ảnh hoặc hóa đơn nếu có để tăng tính xác thực.</li>
+                </ul>
+            </div>
+
+            <div class="panel-card">
+                <h2>Thông tin tiếp theo</h2>
+                <p>Sau khi gửi, hệ thống sẽ ghi nhận yêu cầu và phản hồi trong vòng 24 giờ làm việc. Kiểm tra email hoặc
+                    tài khoản để theo dõi trạng thái khiếu nại.</p>
+            </div>
+
+            <div class="panel-card contact-card">
+                <h3>Cần trợ giúp gấp?</h3>
+                <p>Liên hệ tổng đài chăm sóc khách hàng để được hỗ trợ nhanh:</p>
+                <p><strong>1900 9999</strong></p>
+                <p><strong>support@flightbooking.vn</strong></p>
+            </div>
+        </aside>
+    </main>
+
+    <div id="footer"></div>
+
+    <script src="../../js/vourcher/header_logged.js"></script>
+    <script src="../../js/vourcher/loggedin_layout.js"></script>
+</body>
+
+</html>
