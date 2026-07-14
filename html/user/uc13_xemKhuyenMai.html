@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khuyến mãi - Flight Booking</title>
+    <link rel="stylesheet" href="../../css/user/header.css">
+    <link rel="stylesheet" href="../../css/user/footer.css">
+    <link rel="stylesheet" href="../../css/user/uc13_xemKhuyenMai.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+    <div id="header"></div>
+
+    <main class="main-content">
+        <div class="container promo-container">
+            <div class="page-header">
+                <h1>Chương trình khuyến mãi</h1>
+                <p>Khám phá các ưu đãi hấp dẫn dành riêng cho chuyến bay của bạn</p>
+            </div>
+
+            <div id="alert-message" class="alert hidden"></div>
+
+            <div class="filter-section">
+                <span class="filter-label"><i class="fa-solid fa-filter"></i> Lọc theo:</span>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-status="all" onclick="filterPromos('all')">Tất cả</button>
+                    <button class="filter-btn" data-status="ongoing" onclick="filterPromos('ongoing')">Đang diễn ra</button>
+                    <button class="filter-btn" data-status="upcoming" onclick="filterPromos('upcoming')">Sắp diễn ra</button>
+                    <button class="filter-btn" data-status="expired" onclick="filterPromos('expired')">Đã hết hạn</button>
+                </div>
+            </div>
+
+            <!-- Nơi render danh sách khuyến mãi -->
+            <div class="promo-grid" id="promo-list">
+                <!-- Dữ liệu render từ JS -->
+            </div>
+            
+            <div id="empty-state" class="empty-state hidden">
+                <i class="fa-solid fa-ticket-simple"></i>
+                <p>Hiện tại chưa có chương trình khuyến mãi nào.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Chi tiết Khuyến mãi -->
+    <div id="promo-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Chi tiết khuyến mãi</h2>
+                <span class="close-btn" onclick="closePromoModal()">&times;</span>
+            </div>
+            <div class="modal-body" id="promo-detail-content">
+                <!-- Nội dung render từ JS -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closePromoModal()">Đóng</button>
+                <button class="btn btn-primary" id="btn-copy-code" onclick="copyCode()">
+                    <i class="fa-regular fa-copy"></i> Sao chép mã
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer"></div>
+    <script src="../../js/user/header.js"></script>
+    <script src="../../js/user/uc13_xemKhuyenMai.js"></script>
+</body>
+</html>
