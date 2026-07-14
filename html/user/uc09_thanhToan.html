@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Thanh toán - FLIGHT BOOKING</title>
+    <link rel="stylesheet" href="../../css/user/header.css">
+    <link rel="stylesheet" href="../../css/user/footer.css">
+    <link rel="stylesheet" href="../../css/user/uc09_thanhToan.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+    <div id="header"></div>
+    
+    <div class="payment-container">
+        <div class="payment-main">
+            <h2>Thanh toán an toàn</h2>
+            <div class="alert-box" id="payment-alert" style="display: none;"></div>
+
+            <div class="payment-methods">
+                <h3>Chọn phương thức thanh toán</h3>
+                <div class="method-list">
+                    <label class="method-card">
+                        <input type="radio" name="payment-method" value="credit-card">
+                        <div class="method-content">
+                            <i class="fa-regular fa-credit-card"></i>
+                            <span>Thẻ Tín dụng / Ghi nợ</span>
+                        </div>
+                    </label>
+                    <label class="method-card">
+                        <input type="radio" name="payment-method" value="momo">
+                        <div class="method-content">
+                            <i class="fa-solid fa-wallet"></i>
+                            <span>Ví điện tử MoMo</span>
+                        </div>
+                    </label>
+                    <label class="method-card">
+                        <input type="radio" name="payment-method" value="atm">
+                        <div class="method-content">
+                            <i class="fa-solid fa-building-columns"></i>
+                            <span>Thẻ ATM nội địa</span>
+                        </div>
+                    </label>
+                    <label class="method-card">
+                        <input type="radio" name="payment-method" value="fail-test">
+                        <div class="method-content">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            <span>Test Thanh toán thất bại</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="credit-card-form" id="cc-form" style="display: none;">
+                <h4>Nhập thông tin thẻ</h4>
+                <div class="form-group">
+                    <label>Số thẻ</label>
+                    <input type="text" placeholder="0000 0000 0000 0000">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Ngày hết hạn</label>
+                        <input type="text" placeholder="MM/YY">
+                    </div>
+                    <div class="form-group">
+                        <label>CVV</label>
+                        <input type="text" placeholder="123">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Tên in trên thẻ</label>
+                    <input type="text" placeholder="NGUYEN VAN A">
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-cancel" onclick="cancelPayment()">Hủy giao dịch</button>
+                <button class="btn-pay" onclick="confirmPayment()" id="btn-pay">Xác nhận thanh toán</button>
+            </div>
+        </div>
+
+        <div class="payment-sidebar">
+            <div class="timer-box">
+                <span><i class="fa-regular fa-clock"></i> Thời gian giữ chỗ còn lại:</span>
+                <strong id="countdown-timer">10:00</strong>
+            </div>
+
+            <div class="summary-card">
+                <h3>Chi tiết chuyến bay</h3>
+                <div class="summary-section">
+                    <div class="flight-route">
+                        <strong>SGN</strong>
+                        <i class="fa-solid fa-plane"></i>
+                        <strong>HAN</strong>
+                    </div>
+                    <p class="flight-details-text">Chuyến bay VN202 | 15/08/2026</p>
+                    <p class="flight-details-text">Hạng vé: Phổ thông siêu tiết kiệm</p>
+                    <p class="flight-details-text">Vị trí ghế: 12A, 12B</p>
+                </div>
+
+                <div class="summary-section">
+                    <h4>Thông tin hành khách</h4>
+                    <p>1. NGUYEN VAN A (Người lớn)</p>
+                    <p>2. NGUYEN VAN B (Người lớn)</p>
+                </div>
+
+                <div class="summary-section">
+                    <h4>Dịch vụ bổ sung</h4>
+                    <div class="price-row">
+                        <span>Hành lý ký gửi 23kg x1</span>
+                        <span>250.000 VND</span>
+                    </div>
+                    <div class="price-row">
+                        <span>Suất ăn nóng x2</span>
+                        <span>180.000 VND</span>
+                    </div>
+                </div>
+
+                <div class="summary-section total-section">
+                    <div class="price-row">
+                        <span>Giá vé (x2)</span>
+                        <span>3.000.000 VND</span>
+                    </div>
+                    <div class="price-row">
+                        <span>Thuế và phí</span>
+                        <span>500.000 VND</span>
+                    </div>
+                    <div class="price-row">
+                        <span>Dịch vụ bổ sung</span>
+                        <span>430.000 VND</span>
+                    </div>
+                    <div class="price-row grand-total">
+                        <span>Tổng thanh toán</span>
+                        <strong>3.930.000 VND</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="success-modal">
+        <div class="modal-content success-content">
+            <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+            <h2>Thanh toán thành công!</h2>
+            <p>Trạng thái vé của bạn đã được cập nhật thành "Đã đặt".</p>
+            <p>Vé điện tử và hóa đơn đã được gửi đến email của bạn.</p>
+            <p>Bạn được cộng <strong>393 điểm</strong> tích lũy.</p>
+            <button class="btn-primary mt-20" onclick="window.location.href='trangChu.html'">Về trang chủ</button>
+            <button class="btn-secondary mt-10" onclick="window.location.href='uc07_quanLyVeDaDat.html'">Quản lý vé đã đặt</button>
+        </div>
+    </div>
+
+    <div id="footer"></div>
+    <script src="../../js/user/uc09_thanhToan.js"></script>
+</body>
+</html>

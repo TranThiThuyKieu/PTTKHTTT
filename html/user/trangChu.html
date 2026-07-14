@@ -17,14 +17,215 @@
             <h1>Khám phá thế giới cùng FLIGHT BOOKING</h1>
             <p>Đặt vé máy bay nhanh chóng, an toàn và tiết kiệm hơn bao giờ hết.
             </p>
-            <div class="search-box">
-                <input type="text" placeholder="Điểm khởi hành">
-                <input type="text" placeholder="Điểm đến">
-                <input type="date">
-                <button><i class="fa-solid fa-plane"></i>Tìm chuyến bay</button>
+            <div class="flight-search-container">
+                <div class="ticket-type">
+                    <label class="radio-label">
+                        <input type="radio" name="trip-type" value="round-trip" checked onchange="toggleReturnDate()"> 
+                        <span class="custom-radio"></span>Khứ hồi
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="trip-type" value="one-way" onchange="toggleReturnDate()"> 
+                        <span class="custom-radio"></span>Một chiều
+                    </label>
+                </div>
+                <div class="search-form-grid">
+                    <div class="input-container location-input">
+                        <label>Từ</label>
+                        <input type="text" placeholder="Sân bay đi (VD: SGN)">
+                        <i class="fa-solid fa-plane-departure icon"></i>
+                    </div>
+                    
+                    <div class="swap-btn"><i class="fa-solid fa-right-left"></i></div>
+
+                    <div class="input-container location-input">
+                        <label>Đến</label>
+                        <input type="text" placeholder="Sân bay đến (VD: HAN)">
+                        <i class="fa-solid fa-plane-arrival icon"></i>
+                    </div>
+
+                    <div class="input-container date-input">
+                        <label>Ngày đi</label>
+                        <input type="date" id="departure-date">
+                    </div>
+
+                    <div class="input-container date-input" id="return-date-container">
+                        <label>Ngày về</label>
+                        <input type="date" id="return-date">
+                    </div>
+
+                    <div class="input-container passenger-input" onclick="togglePassengerDropdown(event)">
+                        <label>Hành khách</label>
+                        <div class="passenger-text"><span id="total-passengers">1</span> Hành khách</div>
+                        <i class="fa-solid fa-user-group icon"></i>
+                        
+                        <div class="passenger-dropdown" id="passenger-dropdown" onclick="event.stopPropagation()">
+                            <div class="passenger-type">
+                                <div class="passenger-info">
+                                    <span class="type-name">Người lớn</span>
+                                    <span class="type-desc">&ge; 12 tuổi</span>
+                                </div>
+                                <div class="counter">
+                                    <button type="button" onclick="updateCount('adult', -1)">-</button>
+                                    <span id="adult-count">1</span>
+                                    <button type="button" onclick="updateCount('adult', 1)">+</button>
+                                </div>
+                            </div>
+                            <div class="passenger-type">
+                                <div class="passenger-info">
+                                    <span class="type-name">Trẻ em</span>
+                                    <span class="type-desc">&lt; 12 tuổi</span>
+                                </div>
+                                <div class="counter">
+                                    <button type="button" onclick="updateCount('child', -1)">-</button>
+                                    <span id="child-count">0</span>
+                                    <button type="button" onclick="updateCount('child', 1)">+</button>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-confirm-passenger" onclick="closePassengerDropdown(event)">Xác nhận</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="search-action">
+                    <button class="btn-search-flights" onclick="searchFlights()"><i class="fa-solid fa-magnifying-glass"></i> Tìm chuyến bay</button>
+                </div>
             </div>
         </div>
     </section>
+
+    <section class="search-results-section" id="search-results-section" style="display: none;">
+        <div class="container-inner">
+            <h2 class="section-title">Kết quả tìm kiếm</h2>
+            <div class="search-summary">
+                <div class="route-info">
+                    <strong>TP. Hồ Chí Minh (SGN)</strong> <i class="fa-solid fa-arrow-right"></i> <strong>Hà Nội (HAN)</strong>
+                </div>
+                <div class="meta-info">
+                    <span id="summary-date">15/08/2026</span> | <span id="summary-passenger">1 Người lớn</span>
+                </div>
+            </div>
+
+            <div class="flight-list">
+                <div class="flight-item">
+                    <div class="flight-airline">
+                        <img src="https://th.bing.com/th/id/OIP.c6n9VlX5sT-4B6YkZ9OExAHaHa?rs=1&pid=ImgDetMain" alt="Vietnam Airlines">
+                        <span>Vietnam Airlines</span>
+                    </div>
+                    <div class="flight-time">
+                        <div class="time-block">
+                            <span class="time">06:00</span>
+                            <span class="airport">SGN</span>
+                        </div>
+                        <div class="flight-duration">
+                            <span class="duration">2h 10m</span>
+                            <div class="line"><i class="fa-solid fa-plane"></i></div>
+                            <span class="type">Bay thẳng</span>
+                        </div>
+                        <div class="time-block">
+                            <span class="time">08:10</span>
+                            <span class="airport">HAN</span>
+                        </div>
+                    </div>
+                    <div class="flight-price">
+                        <span class="price">1.500.000 VND</span>
+                        <button class="btn-select-flight" onclick="showFlightDetails('VN202', 'Vietnam Airlines', 'Airbus A321')">Chi tiết</button>
+                    </div>
+                </div>
+                
+                <div class="flight-item">
+                    <div class="flight-airline">
+                        <img src="https://th.bing.com/th/id/OIP.1417z0yKkF2VpIf0tM0DcwHaEK?rs=1&pid=ImgDetMain" alt="Vietjet Air">
+                        <span>Vietjet Air</span>
+                    </div>
+                    <div class="flight-time">
+                        <div class="time-block">
+                            <span class="time">09:30</span>
+                            <span class="airport">SGN</span>
+                        </div>
+                        <div class="flight-duration">
+                            <span class="duration">2h 05m</span>
+                            <div class="line"><i class="fa-solid fa-plane"></i></div>
+                            <span class="type">Bay thẳng</span>
+                        </div>
+                        <div class="time-block">
+                            <span class="time">11:35</span>
+                            <span class="airport">HAN</span>
+                        </div>
+                    </div>
+                    <div class="flight-price">
+                        <span class="price">1.200.000 VND</span>
+                        <button class="btn-select-flight" onclick="showFlightDetails('VJ123', 'Vietjet Air', 'Airbus A320')">Chi tiết</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal-overlay" id="flight-details-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Chi tiết chuyến bay</h3>
+                <button class="btn-close" onclick="closeFlightDetails()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="flight-info-grid">
+                    <div class="detail-item">
+                        <i class="fa-solid fa-barcode"></i>
+                        <div class="detail-text">
+                            <span class="label">Mã chuyến bay</span>
+                            <strong id="detail-flight-code">VN202</strong>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fa-solid fa-plane"></i>
+                        <div class="detail-text">
+                            <span class="label">Hãng hàng không</span>
+                            <strong id="detail-airline">Vietnam Airlines</strong>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fa-solid fa-jet-fighter-up"></i>
+                        <div class="detail-text">
+                            <span class="label">Loại máy bay</span>
+                            <strong id="detail-aircraft">Airbus A321</strong>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fa-solid fa-suitcase-rolling"></i>
+                        <div class="detail-text">
+                            <span class="label">Hành lý xách tay</span>
+                            <strong>12 kg</strong>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fa-solid fa-suitcase"></i>
+                        <div class="detail-text">
+                            <span class="label">Hành lý ký gửi</span>
+                            <strong>23 kg</strong>
+                        </div>
+                    </div>
+                </div>
+                
+                <h4 class="ticket-classes-title">Giá vé theo hạng ghế</h4>
+                <div class="ticket-classes">
+                    <div class="class-card">
+                        <h5>Phổ thông siêu tiết kiệm</h5>
+                        <p class="class-price">1.500.000 VND</p>
+                        <button class="btn-book">Chọn</button>
+                    </div>
+                    <div class="class-card">
+                        <h5>Phổ thông linh hoạt</h5>
+                        <p class="class-price">2.200.000 VND</p>
+                        <button class="btn-book">Chọn</button>
+                    </div>
+                    <div class="class-card premium">
+                        <h5>Thương gia</h5>
+                        <p class="class-price">4.500.000 VND</p>
+                        <button class="btn-book">Chọn</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <section class="destination">
         <h2>Điểm đến phổ biến</h2>
         <div class="destination-grid">
