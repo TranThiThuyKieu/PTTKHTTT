@@ -64,8 +64,10 @@ function renderTable(list) {
             <td>${item.startDate} → ${item.endDate}</td>
             <td><span class="status-badge">${item.status}</span></td>
             <td>
+                <div style="display: flex; gap: 8px; flex-wrap: nowrap;">
                 <button class="action-btn action-edit" data-id="${item.id}">Sửa</button>
                 <button class="action-btn action-delete" data-id="${item.id}">Xóa</button>
+                </div>
             </td>
         `;
         tableBody.appendChild(row);

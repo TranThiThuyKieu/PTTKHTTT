@@ -18,6 +18,25 @@ function togglePassword() {
 // Xử lý đăng nhập – chuyển đến trang chủ
 function handleLogin(event) {
     event.preventDefault();
-    localStorage.setItem('isLoggedIn', 'true');
-    window.location.href = '../user/trangChu.html';
+    const contact = document.getElementById('contact').value.trim();
+    const password = document.getElementById('password').value;
+    const errorLogin = document.getElementById('error-login');
+    if (errorLogin) {
+        errorLogin.style.display = 'none';
+    }
+    if (contact === 'admin' && password === 'admin') {
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('role', 'admin');
+        window.location.href = '../admin/uc19_quanLyThongKe.html';
+    } else if (contact === 'user' && password === 'user') {
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('role', 'user');
+        window.location.href = '../user/trangChu.html';
+    } else {
+        if (errorLogin) {
+            errorLogin.style.display = 'block';
+        } else {
+            alert('Tài khoản hoặc mật khẩu không chính xác!');
+        }
+    }
 }

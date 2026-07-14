@@ -1,19 +1,53 @@
 function initHeader() {
-    const authSection = document.querySelector('.header-right');
+    var authSection = document.querySelector('.header-right');
     if (!authSection) return;
-    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    var isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
     if (isLoggedIn) {
-        authSection.innerHTML = `
-                <a href="uc07_quanLyVeDaDat.html" class="auth-link">Vé đã đặt</a>
-                <span class="divider">|</span>
-                <a href="../login/uc18_dangNhap.html" class="auth-link" onclick="handleLogout(event)">Đăng xuất</a>
-            `;
+        authSection.innerHTML = 
+            '<div class="user-menu">' +
+                '<button class="user-avatar-btn" onclick="toggleUserMenu(event)">' +
+                    '<i class="fa-solid fa-user"></i>' +
+                '</button>' +
+                '<div class="user-dropdown" id="user-dropdown">' +
+                    '<div class="dropdown-header">' +
+                        '<i class="fa-solid fa-circle-user"></i>' +
+                        '<span>Xin chào, <strong>Người dùng</strong></span>' +
+                    '</div>' +
+                    '<div class="dropdown-divider"></div>' +
+                    '<div class="dropdown-group-label">Tài khoản</div>' +
+                    '<a href="../vourcher/uc04_capNhatThongTinCaNhan.html" class="dropdown-item">' +
+                        '<i class="fa-solid fa-user-pen"></i> Cập nhật thông tin cá nhân' +
+                    '</a>' +
+                    '<a href="../vourcher/uc05_06_xemDiemTichLuy.html" class="dropdown-item">' +
+                        '<i class="fa-solid fa-coins"></i> Xem điểm tích lũy' +
+                    '</a>' +
+                    '<a href="uc03_doiMatKhau.html" class="dropdown-item">' +
+                        '<i class="fa-solid fa-key"></i> Đổi mật khẩu' +
+                    '</a>' +
+                    '<div class="dropdown-divider"></div>' +
+                    '<div class="dropdown-group-label">Quản lý vé</div>' +
+                    '<a href="uc07_quanLyVeDaDat.html" class="dropdown-item">' +
+                        '<i class="fa-solid fa-ticket"></i> Vé đã đặt' +
+                    '</a>' +
+                    '<div class="dropdown-divider"></div>' +
+                    '<div class="dropdown-group-label">Hỗ trợ</div>' +
+                    '<a href="../vourcher/uc21_uuDaiTuyenBay.html" class="dropdown-item">' +
+                        '<i class="fa-solid fa-gift"></i> Ưu đãi chuyến bay' +
+                    '</a>' +
+                    '<a href="../vourcher/uc14_khieuNaiChuyenBay.html" class="dropdown-item">' +
+                        '<i class="fa-solid fa-headset"></i> Khiếu nại chuyến bay' +
+                    '</a>' +
+                    '<div class="dropdown-divider"></div>' +
+                    '<a href="#" class="dropdown-item dropdown-logout" onclick="handleLogout(event)">' +
+                        '<i class="fa-solid fa-right-from-bracket"></i> Đăng xuất' +
+                    '</a>' +
+                '</div>' +
+            '</div>';
     } else {
-        authSection.innerHTML = `
-                <a href="../login/uc18_dangNhap.html" class="auth-link">Đăng nhập</a>
-                <span class="divider">|</span>
-                <a href="../login/uc01_dangKy.html" class="auth-link">Đăng ký</a>
-            `;
+        authSection.innerHTML = 
+            '<a href="../login/uc18_dangNhap.html" class="auth-link">Đăng nhập</a>' +
+            '<span class="divider">|</span>' +
+            '<a href="../login/uc01_dangKy.html" class="auth-link">Đăng ký</a>';
     }
 }
 
@@ -21,8 +55,21 @@ document.addEventListener("DOMContentLoaded", function() {
     initHeader();
 });
 
+function toggleUserMenu(event) {
+    event.stopPropagation();
+    var dropdown = document.getElementById('user-dropdown');
+    if (dropdown) dropdown.classList.toggle('show');
+}
+
+document.addEventListener('click', function() {
+    var dropdown = document.getElementById('user-dropdown');
+    if (dropdown && dropdown.classList.contains('show')) {
+        dropdown.classList.remove('show');
+    }
+});
 function handleLogout(event) {
     event.preventDefault();
     localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('role');
     window.location.href = 'trangChu.html';
 }
