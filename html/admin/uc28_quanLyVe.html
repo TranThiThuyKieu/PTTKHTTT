@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý vé - Admin Portal</title>
+    <link rel="stylesheet" href="../../css/admin/uc28_quanLyVe.css">
+    <link rel="stylesheet" href="../../css/admin/layout.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+<div class="admin-wrapper">
+    <div id="sidebar-container"></div>
+    <div class="main-wrapper">
+        <div id="header-container"></div>
+
+<main class="container">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Quản lý phôi vé</h1>
+            <p class="page-subtitle" style="color: #6c757d; margin-top: 5px; font-size: 0.95rem;">Quản lý thông tin hạng vé, giá vé và số lượng bán của các chuyến bay</p>
+        </div>
+        <button class="btn btn-primary" onclick="openForm('add')">
+            <i class="fa-solid fa-plus"></i> Cấu hình vé mới
+        </button>
+    </div>
+
+    <!-- Overview Cards -->
+    <div class="overview-cards" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 25px;">
+        <div class="stat-card" style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 15px;">
+            <div style="background: rgba(13, 110, 253, 0.1); color: #0d6efd; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;"><i class="fa-solid fa-ticket"></i></div>
+            <div><div style="font-size: 0.85rem; color: #6c757d; font-weight: 600;">TỔNG VÉ PHÁT HÀNH</div><div style="font-size: 1.5rem; font-weight: 700; color: #212529;" id="stat-total">0</div></div>
+        </div>
+        <div class="stat-card" style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 15px;">
+            <div style="background: rgba(25, 135, 84, 0.1); color: #198754; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;"><i class="fa-solid fa-check-double"></i></div>
+            <div><div style="font-size: 0.85rem; color: #6c757d; font-weight: 600;">ĐÃ BÁN RA</div><div style="font-size: 1.5rem; font-weight: 700; color: #212529;" id="stat-sold">0</div></div>
+        </div>
+        <div class="stat-card" style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 15px;">
+            <div style="background: rgba(253, 126, 20, 0.1); color: #fd7e14; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;"><i class="fa-solid fa-box-open"></i></div>
+            <div><div style="font-size: 0.85rem; color: #6c757d; font-weight: 600;">CHƯA BÁN (TỒN)</div><div style="font-size: 1.5rem; font-weight: 700; color: #212529;" id="stat-unsold">0</div></div>
+        </div>
+    </div>
+
+    <div id="alert-message" class="alert" style="display: none;"></div>
+
+    <section id="ticket-list-section" class="step-section active">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Mã Vé</th>
+                        <th>Chuyến bay</th>
+                        <th>Hạng ghế</th>
+                        <th>Giá vé (VND)</th>
+                        <th class="text-center">Tổng lượng</th>
+                        <th class="text-center text-success">Đã bán</th>
+                        <th class="text-center text-warning">Chưa bán</th>
+                        <th class="text-center">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody id="ticket-table-body">
+                    <!-- Dữ liệu render từ JS -->
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Modal Thêm/Sửa -->
+    <div id="ticket-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Cấu hình vé máy bay</h2>
+                <span class="close-btn" onclick="closeForm()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="ticket-form">
+                    <input type="hidden" id="ticket-id">
+                    
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Mã gói vé <span class="text-danger">*</span></label>
+                            <input type="text" id="ticket-code" required placeholder="Ví dụ: TKT-VN123-ECO">
+                        </div>
+                        <div class="input-group">
+                            <label>Mã chuyến bay (Chuyến bay đã tạo) <span class="text-danger">*</span></label>
+                            <select id="flight-code" required>
+                                <option value="">-- Chọn chuyến bay --</option>
+                                <option value="VN123">VN123 (SGN - HAN)</option>
+                                <option value="VJ456">VJ456 (SGN - PQC)</option>
+                                <option value="QH789">QH789 (DAD - HAN)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Hạng ghế <span class="text-danger">*</span></label>
+                            <select id="seat-class" required>
+                                <option value="Phổ thông">Phổ thông (Economy)</option>
+                                <option value="Thương gia">Thương gia (Business)</option>
+                                <option value="Hạng nhất">Hạng nhất (First Class)</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Giá vé (VND) <span class="text-danger">*</span></label>
+                            <input type="number" id="ticket-price" required placeholder="Nhập giá vé">
+                        </div>
+                    </div>
+                    
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Số lượng phát hành <span class="text-danger">*</span></label>
+                            <input type="number" id="total-quantity" min="1" required placeholder="Số ghế">
+                            <small class="help-text">Không vượt quá cấu hình tàu bay (Giả định MAX: 200)</small>
+                        </div>
+                        <div class="input-group">
+                            <label>Chính sách hành lý <span class="text-danger">*</span></label>
+                            <select id="baggage" required>
+                                <option value="7kg xách tay">7kg xách tay</option>
+                                <option value="7kg xách tay + 20kg ký gửi">7kg xách tay + 20kg ký gửi</option>
+                                <option value="10kg xách tay + 30kg ký gửi">10kg xách tay + 30kg ký gửi</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeForm()">Hủy bỏ</button>
+                <button class="btn btn-primary" onclick="saveTicket()">Lưu thông tin</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Xác nhận xóa -->
+    <div id="delete-modal" class="modal">
+        <div class="modal-content modal-sm">
+            <div class="modal-header">
+                <h2>Xác nhận xóa vé</h2>
+                <span class="close-btn" onclick="closeDeleteModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc chắn muốn xóa cấu hình vé <strong id="delete-ticket-code" class="text-primary"></strong>?</p>
+                <p class="small-text text-danger mt-2">
+                    <i class="fa-solid fa-triangle-exclamation"></i> 
+                    Lưu ý: Không thể xóa phôi vé nếu đã có khách hàng mua (Đã bán > 0).
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeDeleteModal()">Hủy</button>
+                <button class="btn btn-danger" onclick="confirmDelete()">Xác nhận xóa</button>
+            </div>
+        </div>
+    </div>
+</main>
+
+    </div>
+</div>
+
+<script src="../../js/admin/layout.js"></script>
+<script src="../../js/admin/uc28_quanLyVe.js"></script>
+</body>
+</html>
