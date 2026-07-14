@@ -5,19 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý chuyến bay - Admin Portal</title>
     <link rel="stylesheet" href="../../css/admin/uc26_quanLyChuyenBay.css">
+    <link rel="stylesheet" href="../../css/admin/layout.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 <body>
-<div id="admin-header">
-    <div class="admin-nav">
-        <div class="logo">
-            <h2><i class="fa-solid fa-plane-departure"></i> FlightBooking Admin</h2>
-        </div>
-        <div class="user-info">
-            <span><i class="fa-solid fa-user-tie"></i> Xin chào, Quản trị viên</span>
-        </div>
-    </div>
-</div>
+<div class="admin-wrapper">
+    <div id="sidebar-container"></div>
+    <div class="main-wrapper">
+        <div id="header-container"></div>
 
 <main class="container">
     <div class="page-header">
@@ -139,7 +134,10 @@
         </div>
     </div>
 </main>
+    </div>
+</div>
 
+<script src="../../js/admin/layout.js"></script>
 <script src="../../js/admin/uc26_quanLyChuyenBay.js"></script>
 </body>
 </html>
