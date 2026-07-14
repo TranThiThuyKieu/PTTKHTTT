@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Tải Header & Footer
     fetch('header.html')
         .then(response => response.text())
         .then(data => {
@@ -12,11 +11,11 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('footer').innerHTML = data;
         });
 
-    renderSeatMap(); // Render sơ đồ ghế ban đầu (Phổ thông)
+    renderSeatMap();
 });
 
 let currentStep = 1;
-let selectedClass = 'eco'; // eco hoặc bus
+let selectedClass = 'eco';
 let selectedSeat = null;
 let basePrice = 1500000;
 let servicesPrice = 0;
@@ -47,11 +46,19 @@ function showStep(stepNumber) {
 }
 
 function prevStep(stepNumber) {
-    // Luồng phụ 8.6: Khách hàng chỉnh sửa thông tin hành khách hoặc ghế
     showStep(stepNumber);
 }
 
-// ================= STEP 1: CHỌN GHẾ NGỒI =================
+let occupiedSeats = [];
+
+function generateOccupiedSeats(rows, colsArr) {
+    if (selectedClass === 'eco') {
+        occupiedSeats = ['1A', '1C', '2B', '3E', '4D', '5A', '5F', '6C'];
+    } else {
+        occupiedSeats = ['1B', '2A', '3E'];
+    }
+}
+
 function selectClass(cls) {
     document.querySelectorAll('.class-card').forEach(el => el.classList.remove('selected'));
     if (cls === 'eco') {
@@ -64,7 +71,11 @@ function selectClass(cls) {
         basePrice = 4000000;
     }
     selectedClass = cls;
-    selectedSeat = null; // Bỏ chọn ghế khi đổi hạng
+    selectedSeat = null;
+    
+    const rows = cls === 'eco' ? 6 : 3;
+    generateOccupiedSeats(rows, ['A', 'B', 'C', 'D', 'E', 'F']);
+    
     renderSeatMap();
     updateTotal();
 }
@@ -75,11 +86,14 @@ function renderSeatMap() {
     const rows = selectedClass === 'eco' ? 6 : 3;
     const cols = ['A', 'B', 'C', 'D', 'E', 'F'];
 
+    if (occupiedSeats.length === 0) {
+        generateOccupiedSeats(rows, cols);
+    }
+
     for (let i = 1; i <= rows; i++) {
         for (let j = 0; j < 6; j++) {
             const seatId = `${i}${cols[j]}`;
-            // Giả lập một số ghế đã bị đặt (20%)
-            const isOccupied = Math.random() < 0.2; 
+            const isOccupied = occupiedSeats.includes(seatId); 
             const seatDiv = document.createElement('div');
             
             if (isOccupied) {
@@ -104,24 +118,20 @@ function handleSeatSelect(seatId) {
 function nextStep(target) {
     hideAlert();
     
-    // Đang ở bước 1 -> sang bước 2
     if (currentStep === 1 && target === 2) {
-        // Luồng phụ 8.5: Khách hàng chưa chọn ghế
         if (!selectedSeat) {
             return showAlert('Luồng 8.5: Vui lòng chọn một chỗ ngồi trên sơ đồ trước khi tiếp tục.', 'error');
         }
         
-        // Luồng phụ 8.1: Ghế đã được người khác đặt (Giả lập 10% xảy ra trong lúc click Tiếp tục)
-        if (Math.random() < 0.1) {
+        if ((selectedClass === 'eco' && selectedSeat === '3A') || (selectedClass === 'bus' && selectedSeat === '1A')) {
+            occupiedSeats.push(selectedSeat);
             selectedSeat = null;
             renderSeatMap();
             return showAlert('Luồng 8.1: Rất tiếc, ghế bạn chọn vừa được khách hàng khác thanh toán. Vui lòng chọn ghế khác.', 'error');
         }
     }
 
-    // Đang ở bước 3 -> sang bước 4 (Cập nhật tóm tắt)
     if (currentStep === 3 && target === 4) {
-        // Render Summary
         const title = document.getElementById('p-title').value;
         const name = document.getElementById('p-name').value.toUpperCase();
         document.getElementById('sum-name').textContent = `${title} ${name}`;
@@ -129,7 +139,6 @@ function nextStep(target) {
         document.getElementById('sum-class').textContent = selectedClass === 'eco' ? 'Phổ thông' : 'Thương gia';
         document.getElementById('sum-seat').textContent = selectedSeat;
         
-        // Services Summary
         const srvList = document.getElementById('sum-services');
         srvList.innerHTML = '';
         const baggageVal = document.getElementById('srv-baggage');
@@ -145,7 +154,6 @@ function nextStep(target) {
     showStep(target);
 }
 
-// ================= STEP 2: THÔNG TIN HÀNH KHÁCH =================
 function validatePassengerInfo() {
     hideAlert();
     const name = document.getElementById('p-name').value.trim();
@@ -153,20 +161,17 @@ function validatePassengerInfo() {
     const phone = document.getElementById('p-phone').value.trim();
     const email = document.getElementById('p-email').value.trim();
 
-    // Luồng phụ 8.2: Thông tin hành khách không hợp lệ
     if (!name || !dob || !phone || !email || !email.includes('@')) {
         return showAlert('Luồng 8.2: Vui lòng nhập đầy đủ và chính xác thông tin hành khách bắt buộc.', 'error');
     }
 
-    // Chuyển sang bước Dịch vụ
     showStep(3);
 }
 
-// ================= STEP 3: DỊCH VỤ BỔ SUNG =================
 function updateTotal() {
-    // Luồng phụ 8.3: Dịch vụ bổ sung không khả dụng (Giả lập 5% khi người dùng chọn Dịch vụ)
-    if (Math.random() < 0.05) { 
-        showAlert('Luồng 8.3: Rất tiếc, dịch vụ này hiện đã hết suất. Hệ thống đã đặt lại mặc định.', 'error');
+    const mealVal = document.getElementById('srv-meal').value;
+    if (mealVal === "120000") { 
+        showAlert('Luồng 8.3: Rất tiếc, suất ăn Mì ý sốt bò băm hiện đã hết. Hệ thống đã đặt lại mặc định.', 'error');
         document.getElementById('srv-meal').value = "0";
     }
 
@@ -175,7 +180,6 @@ function updateTotal() {
     
     servicesPrice = baggagePrice + mealPrice;
     
-    // Render Prices
     document.getElementById('price-base').textContent = basePrice.toLocaleString() + ' VND';
     document.getElementById('price-services').textContent = servicesPrice.toLocaleString() + ' VND';
     
@@ -183,7 +187,6 @@ function updateTotal() {
     document.getElementById('price-total').textContent = Math.max(0, total).toLocaleString() + ' VND';
 }
 
-// ================= STEP 4: TÓM TẮT & KHUYẾN MÃI =================
 function applyPromo() {
     hideAlert();
     const code = document.getElementById('promo-code').value.trim().toUpperCase();
@@ -204,7 +207,6 @@ function applyPromo() {
         document.getElementById('price-discount').textContent = discount.toLocaleString() + ' VND';
         updateTotal();
     } else {
-        // Luồng phụ 8.4: Mã khuyến mãi không hợp lệ
         discount = 0;
         promoApplied = false;
         msgEl.className = 'text-danger';
@@ -215,18 +217,15 @@ function applyPromo() {
 }
 
 function confirmBooking() {
-    // Luồng chính: Kết thúc UC08
     showAlert('Hệ thống đang xử lý tạo đơn đặt chỗ...', 'success');
     
     setTimeout(() => {
-        alert('Tạo đơn giữ chỗ tạm thời (10 phút) thành công. \nHệ thống sẽ chuyển hướng sang trang Thanh toán (Use Case Thanh toán).');
-        // Ở môi trường thực tế sẽ gọi: window.location.href = 'thanhToan.html';
+        window.location.href = 'uc09_thanhToan.html';
     }, 1200);
 }
 
 function cancelProcess() {
-    // Luồng phụ 8.7: Khách hàng hủy quá trình đặt vé
     if(confirm('Bạn có chắc chắn muốn hủy toàn bộ quá trình đặt vé? Hệ thống sẽ không lưu lại thông tin nào.')) {
-        window.location.href = 'trangChu.html'; // Hoặc trang danh sách chuyến bay
+        window.location.href = 'trangChu.html';
     }
 }
