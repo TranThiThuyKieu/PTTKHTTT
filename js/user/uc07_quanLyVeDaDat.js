@@ -112,7 +112,7 @@ function openTicketDetails(ticketId) {
         showAlert("Không thể tải thông tin vé. Vui lòng thử lại sau.", "error");
         return;
     }
-
+  
     const ticket = mockTickets.find(t => t.id === ticketId);
 
     // Luồng phụ 10.1: Không tìm thấy vé
