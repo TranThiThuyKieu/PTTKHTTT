@@ -93,7 +93,7 @@ function renderResult(ticket) {
 function cancelLookup() {
     // Luồng phụ 15.5: Khách hàng hủy quá trình tra cứu
     if (confirm('Bạn có muốn hủy tra cứu và quay về trang chủ không?')) {
-        window.location.href = '../../trangChu.html';
+        window.location.href = '../../index.html';
     }
 }
 

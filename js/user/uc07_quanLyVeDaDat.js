@@ -64,7 +64,7 @@ function renderTickets() {
                 <h2>Bạn chưa có hành trình nào.</h2>
                 <p>Hãy bắt đầu lên kế hoạch cho chuyến đi tiếp theo của bạn ngay hôm nay.</p>
                 <div class="empty-actions">
-                    <button class="btn btn-secondary" onclick="window.location.href='../../trangChu.html'">Quay lại trang chủ</button>
+                    <button class="btn btn-secondary" onclick="window.location.href='../../index.html'">Quay lại trang chủ</button>
                     <button class="btn btn-primary" onclick="window.location.href='uc16_timKiemChuyenBay.html'">Đặt vé ngay</button>
                 </div>
             </div>
