@@ -1,4 +1,4 @@
-fetch('header.html')
+fetch('./html/user/header.html')
     .then(response => response.text())
     .then(data => {
         document.getElementById('header').innerHTML = data;
@@ -6,7 +6,7 @@ fetch('header.html')
             initHeader();
         }
     });
-fetch('footer.html')
+fetch('./html/user/footer.html')
     .then(response => response.text())
     .then(data => {
         document.getElementById('footer').innerHTML = data;
@@ -15,7 +15,7 @@ fetch('footer.html')
 function toggleReturnDate() {
     const tripType = document.querySelector('input[name="trip-type"]:checked').value;
     const returnDateContainer = document.getElementById('return-date-container');
-    
+
     if (tripType === 'one-way') {
         returnDateContainer.style.opacity = '0.5';
         returnDateContainer.style.pointerEvents = 'none';
@@ -36,10 +36,10 @@ function closePassengerDropdown(event) {
     document.getElementById('passenger-dropdown').classList.remove('show');
 }
 
-document.addEventListener('click', function(event) {
+document.addEventListener('click', function (event) {
     const dropdown = document.getElementById('passenger-dropdown');
     const passengerInput = document.querySelector('.passenger-input');
-    
+
     if (dropdown && dropdown.classList.contains('show') && !passengerInput.contains(event.target)) {
         dropdown.classList.remove('show');
     }
@@ -58,7 +58,7 @@ function updateCount(type, delta) {
         if (childCount < 0) childCount = 0; // Minimum 0 child
         document.getElementById('child-count').innerText = childCount;
     }
-    
+
     document.getElementById('total-passengers').innerText = adultCount + childCount;
 }
 
@@ -68,17 +68,17 @@ function searchFlights() {
     const arrivalAirport = document.querySelectorAll('.location-input input')[1].value.trim();
     const departureDate = document.getElementById('departure-date').value;
     const returnDate = document.getElementById('return-date').value;
-    
+
     if (!departureAirport || !arrivalAirport || !departureDate) {
         alert("Vui lòng nhập đầy đủ thông tin hành trình (Sân bay đi, Sân bay đến, Ngày đi).");
         return;
     }
-    
+
     if (departureAirport.toLowerCase() === arrivalAirport.toLowerCase()) {
         alert("Sân bay đi và sân bay đến không được trùng nhau.");
         return;
     }
-    
+
     if (tripType === 'round-trip') {
         if (!returnDate) {
             alert("Vui lòng chọn ngày về.");
@@ -89,21 +89,21 @@ function searchFlights() {
             return;
         }
     }
-    
+
     if (adultCount === 0 && childCount > 0) {
         alert("Trẻ em phải đi cùng ít nhất một người lớn.");
         return;
     }
-    
+
     document.querySelector('.route-info').innerHTML = `<strong>${departureAirport.toUpperCase()}</strong> <i class="fa-solid fa-arrow-right"></i> <strong>${arrivalAirport.toUpperCase()}</strong>`;
-    
+
     let summaryText = `${formatDate(departureDate)} | ${adultCount} Người lớn`;
     if (childCount > 0) summaryText += `, ${childCount} Trẻ em`;
     document.querySelector('.meta-info').innerHTML = `<span id="summary-date">${summaryText}</span>`;
-    
+
     const resultsSection = document.getElementById('search-results-section');
     resultsSection.style.display = 'block';
-    
+
     resultsSection.scrollIntoView({ behavior: 'smooth' });
 }
 
@@ -119,7 +119,7 @@ function showFlightDetails(flightCode, airline, aircraft) {
     document.getElementById('detail-flight-code').innerText = flightCode;
     document.getElementById('detail-airline').innerText = airline;
     document.getElementById('detail-aircraft').innerText = aircraft;
-    
+
     const modal = document.getElementById('flight-details-modal');
     modal.classList.add('active');
 }

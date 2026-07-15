@@ -79,7 +79,7 @@ function renderResult(ticket) {
     document.getElementById('res-pnr').textContent = `Mã Đặt Chỗ: ${ticket.pnr}`;
     document.getElementById('res-route').textContent = ticket.route;
     document.getElementById('res-date').textContent = ticket.date;
-    
+
     const statusEl = document.getElementById('res-status');
     statusEl.textContent = ticket.statusLabel;
     statusEl.className = `ticket-status status-badge-${ticket.status}`;
@@ -92,15 +92,15 @@ function renderResult(ticket) {
 
 function cancelLookup() {
     // Luồng phụ 15.5: Khách hàng hủy quá trình tra cứu
-    if(confirm('Bạn có muốn hủy tra cứu và quay về trang chủ không?')) {
-        window.location.href = 'trangChu.html';
+    if (confirm('Bạn có muốn hủy tra cứu và quay về trang chủ không?')) {
+        window.location.href = '../../trangChu.html';
     }
 }
 
 function viewDetails() {
     // Luồng chính kết thúc thành công -> Chuyển sang UC10: Xem chi tiết vé
     alert('Tra cứu thành công. Hệ thống chuyển hướng sang UC10 (Trang Xem chi tiết thông tin và trạng thái vé của mã đặt chỗ này).');
-    
+
     // Ở hệ thống thực tế sẽ redirect hoặc open modal giống bên uc07_quanLyVeDaDat.html
     // window.location.href = 'uc07_quanLyVeDaDat.html?pnr=' + document.getElementById('pnr').value; 
 }
