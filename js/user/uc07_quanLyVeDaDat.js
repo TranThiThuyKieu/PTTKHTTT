@@ -64,7 +64,7 @@ function renderTickets() {
                 <h2>Bạn chưa có hành trình nào.</h2>
                 <p>Hãy bắt đầu lên kế hoạch cho chuyến đi tiếp theo của bạn ngay hôm nay.</p>
                 <div class="empty-actions">
-                    <button class="btn btn-secondary" onclick="window.location.href='trangChu.html'">Quay lại trang chủ</button>
+                    <button class="btn btn-secondary" onclick="window.location.href='../../index.html'">Quay lại trang chủ</button>
                     <button class="btn btn-primary" onclick="window.location.href='uc16_timKiemChuyenBay.html'">Đặt vé ngay</button>
                 </div>
             </div>
@@ -112,9 +112,9 @@ function openTicketDetails(ticketId) {
         showAlert("Không thể tải thông tin vé. Vui lòng thử lại sau.", "error");
         return;
     }
-
+  
     const ticket = mockTickets.find(t => t.id === ticketId);
-    
+
     // Luồng phụ 10.1: Không tìm thấy vé
     if (!ticket) {
         showAlert("Không tìm thấy thông tin vé hoặc vé không còn tồn tại.", "error");

@@ -31,7 +31,7 @@ function handleLogin(event) {
     } else if (contact === 'user' && password === 'user') {
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('role', 'user');
-        window.location.href = '../user/trangChu.html';
+        window.location.href = '../../index.html';
     } else {
         if (errorLogin) {
             errorLogin.style.display = 'block';

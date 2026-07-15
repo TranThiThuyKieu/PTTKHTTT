@@ -1,15 +1,26 @@
 function initHeader() {
     const authSection = document.querySelector('.header-right');
     if (!authSection) return;
-    const isVourcher = window.location.pathname.includes('/vourcher/');
-    const userPrefix = isVourcher ? '../user/' : '';
-    const vourcherPrefix = isVourcher ? '' : '../vourcher/';
-    const loginPrefix = '../login/';
+
+    const currentPath = window.location.pathname;
+    const isVourcher = currentPath.includes('/vourcher/');
+    const isRootPage = !currentPath.includes('/html/');
+    const userPrefix = isVourcher ? '../user/' : (isRootPage ? 'html/user/' : '');
+    const vourcherPrefix = isVourcher ? '' : (isRootPage ? 'html/vourcher/' : '../vourcher/');
+    const loginPrefix = isRootPage ? 'html/login/' : '../login/';
+    const homeHref = isRootPage ? 'index.html' : '../../index.html';
     const staticLinks = document.querySelectorAll('.header-left a, .header-center a');
+
     staticLinks.forEach(link => {
         const href = link.getAttribute('href');
-        if (href && !href.startsWith('http') && !href.startsWith('#') && !href.includes('/')) {
-            link.setAttribute('href', userPrefix + href);
+        if (!href || href.startsWith('http') || href.startsWith('#')) return;
+
+        const normalizedHref = href.replace(/^\.\//, '').replace(/^\//, '');
+
+        if (normalizedHref === 'index.html' || normalizedHref === 'trangChu.html' || normalizedHref === 'home.html') {
+            link.setAttribute('href', homeHref);
+        } else if (!normalizedHref.includes('/')) {
+            link.setAttribute('href', userPrefix + normalizedHref);
         }
     });
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
@@ -64,7 +75,7 @@ function initHeader() {
     }
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     initHeader();
 });
 
@@ -74,7 +85,7 @@ function toggleUserMenu(event) {
     if (dropdown) dropdown.classList.toggle('show');
 }
 
-document.addEventListener('click', function() {
+document.addEventListener('click', function () {
     var dropdown = document.getElementById('user-dropdown');
     if (dropdown && dropdown.classList.contains('show')) {
         dropdown.classList.remove('show');
@@ -85,5 +96,6 @@ function handleLogout(event) {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('role');
     const isVourcher = window.location.pathname.includes('/vourcher/');
-    window.location.href = isVourcher ? '../user/trangChu.html' : 'trangChu.html';
+    const homePath = window.location.pathname.includes('/html/') ? '../../index.html' : 'index.html';
+    window.location.href = homePath;
 }
