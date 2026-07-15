@@ -226,6 +226,6 @@ function confirmBooking() {
 
 function cancelProcess() {
     if (confirm('Bạn có chắc chắn muốn hủy toàn bộ quá trình đặt vé? Hệ thống sẽ không lưu lại thông tin nào.')) {
-        window.location.href = '../../trangChu.html';
+        window.location.href = '../../index.html';
     }
 }

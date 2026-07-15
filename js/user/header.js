@@ -8,7 +8,7 @@ function initHeader() {
     const userPrefix = isVourcher ? '../user/' : (isRootPage ? 'html/user/' : '');
     const vourcherPrefix = isVourcher ? '' : (isRootPage ? 'html/vourcher/' : '../vourcher/');
     const loginPrefix = isRootPage ? 'html/login/' : '../login/';
-    const homeHref = isRootPage ? 'trangChu.html' : '../../trangChu.html';
+    const homeHref = isRootPage ? 'index.html' : '../../index.html';
     const staticLinks = document.querySelectorAll('.header-left a, .header-center a');
 
     staticLinks.forEach(link => {
@@ -17,7 +17,7 @@ function initHeader() {
 
         const normalizedHref = href.replace(/^\.\//, '').replace(/^\//, '');
 
-        if (normalizedHref === 'trangChu.html' || normalizedHref === 'home.html') {
+        if (normalizedHref === 'index.html' || normalizedHref === 'trangChu.html' || normalizedHref === 'home.html') {
             link.setAttribute('href', homeHref);
         } else if (!normalizedHref.includes('/')) {
             link.setAttribute('href', userPrefix + normalizedHref);
@@ -96,6 +96,6 @@ function handleLogout(event) {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('role');
     const isVourcher = window.location.pathname.includes('/vourcher/');
-    const homePath = window.location.pathname.includes('/html/') ? '../../trangChu.html' : 'trangChu.html';
+    const homePath = window.location.pathname.includes('/html/') ? '../../index.html' : 'index.html';
     window.location.href = homePath;
 }

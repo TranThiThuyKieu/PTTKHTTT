@@ -109,7 +109,7 @@ function confirmPayment() {
 function cancelPayment() {
     const confirmCancel = confirm('Bạn có chắc chắn muốn hủy giao dịch này không? Vé sẽ bị hủy nếu bạn không thanh toán kịp thời gian.');
     if (confirmCancel) {
-        window.location.href = '../../trangChu.html';
+        window.location.href = '../../index.html';
     }
 }
 

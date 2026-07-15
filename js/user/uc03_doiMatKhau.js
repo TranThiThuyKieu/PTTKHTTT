@@ -52,7 +52,7 @@ function validateNewPassword(password) {
 function cancelChange() {
     document.getElementById('change-password-form').reset();
     hideAlert();
-    window.location.href = '../../trangChu.html';
+    window.location.href = '../../index.html';
 }
 function handleChangePassword(e) {
     e.preventDefault();
@@ -78,7 +78,7 @@ function handleChangePassword(e) {
             isAccountLocked = true;
             showAlert("Tài khoản tạm thời bị khóa do nhập sai mật khẩu quá 5 lần. Tự động đăng xuất...", "error");
             setTimeout(() => {
-                window.location.href = '../../trangChu.html';
+                window.location.href = '../../index.html';
             }, 3000);
             return;
         } else {
